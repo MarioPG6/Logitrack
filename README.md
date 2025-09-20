@@ -75,9 +75,9 @@ docker run --name logitrack-postgres -e POSTGRES_DB=db_logitrack \
 # 3. Configuración del Backend (Spring Boot)
 
 Ruta del backend:
-
+```sh
 Logitrack/backend
-
+```
 
 Archivo src/main/resources/application.properties:
 ```sh
