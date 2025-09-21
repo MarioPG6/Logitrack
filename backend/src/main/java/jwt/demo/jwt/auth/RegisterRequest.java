@@ -1,5 +1,6 @@
 package jwt.demo.jwt.auth;
 
+import jwt.demo.jwt.User.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,5 @@ public class RegisterRequest {
     String lastname;
     String direction;
     String phone;
+    Role role;
 }
