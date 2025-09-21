@@ -1,24 +1,76 @@
 <template>
   <aside class="sidebar">
     <div class="sidebar-header">
-      <h1 class="logo">LogiTrack</h1>
+      <h1 class="logo">
+        <MapPin class="w-5 h-5" /> LogiTrack
+      </h1>
     </div>
 
     <nav class="menu">
+      <!-- Opción siempre visible -->
       <router-link to="/" class="menu-item">
-        <i class="fas fa-home"></i> Página Principal
+        <Home class="w-5 h-5" /> Inicio
       </router-link>
-      <router-link to="/login" class="menu-item">
-        <i class="fas fa-box"></i> Iniciar Sesión
-      </router-link>
-      <router-link to="/register" class="menu-item">
-        <i class="fas fa-chart-bar"></i> Registrarse
-      </router-link>
+
+      <!-- Opciones si NO está autenticado -->
+      <template v-if="!isAuthenticated">
+        <router-link to="/login" class="menu-item">
+          <LogIn class="w-5 h-5" /> Iniciar Sesión
+        </router-link>
+        <router-link to="/register" class="menu-item">
+          <UserPlus class="w-5 h-5" /> Registrarse
+        </router-link>
+      </template>
+
+      <!-- Opciones si está autenticado -->
+      <template v-else>
+        <router-link to="/profile" class="menu-item">
+          <User class="w-5 h-5" /> Perfil
+        </router-link>
+        <button @click="logout" class="menu-item logout-btn">
+          <LogOut class="w-5 h-5" /> Cerrar Sesión
+        </button>
+      </template>
     </nav>
   </aside>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { getCurrentUser } from "../services/authService.js";
+
+// Importar íconos de Lucide
+import { Home, LogIn, UserPlus, User, LogOut, MapPin } from "lucide-vue-next";
+
+const router = useRouter();
+const isAuthenticated = ref(false);
+
+async function checkAuth() {
+  try {
+    // Si hay token en localStorage intentamos validar al usuario
+    const token = localStorage.getItem("token");
+    if (!token) {
+      isAuthenticated.value = false;
+      return;
+    }
+    const user = await getCurrentUser();
+    isAuthenticated.value = !!user;
+  } catch {
+    isAuthenticated.value = false;
+  }
+}
+
+onMounted(() => {
+  checkAuth();
+});
+
+function logout() {
+  localStorage.removeItem("token");
+  isAuthenticated.value = false;
+  router.push("/login");
+}
+</script>
 
 <style scoped>
 .sidebar {
@@ -44,6 +96,10 @@
 .logo {
   font-size: 1.4rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
 }
 
 .menu {
@@ -62,9 +118,17 @@
   padding: 10px;
   border-radius: 8px;
   transition: background 0.2s;
+  background: none;
+  border: none;
+  text-align: left;
 }
 
 .menu-item:hover {
   background-color: #256628;
+  cursor: pointer;
+}
+
+.logout-btn {
+  color: #ffdddd;
 }
 </style>

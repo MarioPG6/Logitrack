@@ -34,7 +34,7 @@ async function handleRegister() {
   const res = await register(form);
   if (res.token) {
     localStorage.setItem("token", res.token);
-    message.value = "Registro exitoso 🎉";
+    message.value = "Registro exitoso";
   } else {
     message.value = "Error en el registro";
   }

@@ -10,11 +10,6 @@
       <p><strong>Email:</strong> {{ user.email }}</p>
       <p><strong>Rol:</strong> {{ user.role }}</p>
       <p><strong>Nombre:</strong> {{ user.firstname }} {{ user.lastname }}</p>
-
-      <!-- Botón de logout -->
-      <button @click="logout" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">
-        Cerrar Sesión
-      </button>
     </div>
 
     <div v-else>
@@ -25,10 +20,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { getCurrentUser } from "../services/authService.js";
 
-const router = useRouter();
 const user = ref(null);
 const loading = ref(true);
 const error = ref(null);
@@ -42,9 +35,4 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-
-function logout() {
-  localStorage.removeItem("token"); // eliminamos el token
-  router.push("/login"); // redirigimos al login
-}
 </script>

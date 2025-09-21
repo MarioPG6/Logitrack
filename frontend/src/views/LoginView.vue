@@ -38,8 +38,10 @@ async function handleLogin() {
       localStorage.setItem("token", res.token);
       message.value = "Login exitoso ✅";
 
-      // Redirigimos al perfil
-      router.push("/profile");
+      // Redirigimos al perfil y recargamos la app
+      router.push("/profile").then(() => {
+        window.location.reload();
+      });
     } else {
       message.value = "Credenciales incorrectas ❌";
     }
