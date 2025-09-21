@@ -1,3 +1,4 @@
+<style scoped src="../assets/styles.css"></style>
 <template>
   <div class="container">
     <h2>Registro</h2>

@@ -1,11 +1,24 @@
 <template>
-  <div>
-    <nav>
-      <router-link to="/login"><button>Login</button></router-link>
-      <router-link to="/register"><button>Registro</button></router-link>
-      <router-link to="/profile"><button>Perfil</button></router-link>
-    </nav>
-
-    <router-view />
+  <div class="app-layout">
+    <Sidebar />
+    <main class="content">
+      <router-view />
+    </main>
   </div>
 </template>
+
+<script setup>
+import Sidebar from "./components/Sidebar.vue";
+</script>
+
+<style scoped>
+.app-layout {
+  display: flex;
+}
+
+.content {
+  margin-left: 220px; /* Ancho del sidebar */
+  padding: 20px;
+  flex: 1;
+}
+</style>
