@@ -15,7 +15,6 @@
       <p v-else-if="error" class="error">{{ error }}</p>
 
       <div v-else-if="user" class="profile-info">
-        <p><strong>ID:</strong> {{ user.id }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Rol:</strong> {{ user.role }}</p>
         <p><strong>Nombre:</strong> {{ user.firstname }} {{ user.lastname }}</p>

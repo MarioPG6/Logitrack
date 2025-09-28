@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 }) // habilitar CORS
                                 .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers("/auth/**").permitAll()
+                                                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

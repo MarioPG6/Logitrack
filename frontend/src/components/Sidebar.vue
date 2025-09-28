@@ -1,18 +1,14 @@
 <template>
   <aside class="sidebar">
     <div class="sidebar-header">
-      <h1 class="logo">
-        <MapPin class="w-5 h-5" /> LogiTrack
-      </h1>
+      <h1 class="logo"><MapPin class="w-5 h-5" /> LogiTrack</h1>
     </div>
 
     <nav class="menu">
-      <!-- Opción siempre visible -->
       <router-link to="/" class="menu-item">
         <Home class="w-5 h-5" /> Inicio
       </router-link>
 
-      <!-- Opciones si NO está autenticado -->
       <template v-if="!isAuthenticated">
         <router-link to="/login" class="menu-item">
           <LogIn class="w-5 h-5" /> Iniciar Sesión
@@ -22,11 +18,20 @@
         </router-link>
       </template>
 
-      <!-- Opciones si está autenticado -->
       <template v-else>
         <router-link to="/profile" class="menu-item">
           <User class="w-5 h-5" /> Perfil
         </router-link>
+
+        <template v-if="userRole === 'CLIENTE'">
+          <router-link to="/encomiendas/nueva" class="menu-item">
+            <Package class="w-5 h-5" /> Generar Envío
+          </router-link>
+          <router-link to="/mis-encomiendas" class="menu-item">
+            <Truck class="w-5 h-5" /> Ver Envíos
+          </router-link>
+        </template>
+
         <button @click="logout" class="menu-item logout-btn">
           <LogOut class="w-5 h-5" /> Cerrar Sesión
         </button>
@@ -40,24 +45,35 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getCurrentUser } from "../services/authService.js";
 
-// Importar íconos de Lucide
-import { Home, LogIn, UserPlus, User, LogOut, MapPin } from "lucide-vue-next";
+// Iconos
+import {
+  Home,
+  LogIn,
+  UserPlus,
+  User,
+  LogOut,
+  MapPin,
+  Package,
+  Truck,
+} from "lucide-vue-next";
 
 const router = useRouter();
 const isAuthenticated = ref(false);
+const userRole = ref(null);
 
 async function checkAuth() {
   try {
-    // Si hay token en localStorage intentamos validar al usuario
-    const token = localStorage.getItem("token");
-    if (!token) {
+    const tokenUser = await getCurrentUser(); 
+    if (!tokenUser) {
       isAuthenticated.value = false;
+      userRole.value = null;
       return;
     }
-    const user = await getCurrentUser();
-    isAuthenticated.value = !!user;
+    isAuthenticated.value = true;
+    userRole.value = tokenUser.role; 
   } catch {
     isAuthenticated.value = false;
+    userRole.value = null;
   }
 }
 
@@ -68,9 +84,11 @@ onMounted(() => {
 function logout() {
   localStorage.removeItem("token");
   isAuthenticated.value = false;
+  userRole.value = null;
   router.push("/login");
 }
 </script>
+
 
 <style scoped>
 .sidebar {
@@ -87,12 +105,10 @@ function logout() {
   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif;
 }
-
 .sidebar-header {
   margin-bottom: 40px;
   text-align: center;
 }
-
 .logo {
   font-size: 1.4rem;
   font-weight: bold;
@@ -101,13 +117,11 @@ function logout() {
   gap: 8px;
   justify-content: center;
 }
-
 .menu {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
 .menu-item {
   color: white;
   text-decoration: none;
@@ -122,12 +136,10 @@ function logout() {
   border: none;
   text-align: left;
 }
-
 .menu-item:hover {
   background-color: #256628;
   cursor: pointer;
 }
-
 .logout-btn {
   color: #ffdddd;
 }
