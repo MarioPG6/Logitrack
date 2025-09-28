@@ -5,8 +5,14 @@ import ProfileView from "../views/ProfileView.vue";
 import NuevaEncomiendaView from "../views/NuevaEncomiendaView.vue";
 import MisEncomiendasView from "../views/MisEncomiendasView.vue";
 import VerEncomiendaView from "../views/VerEncomiendaView.vue"; 
+import HomeView from "../views/HomeView.vue";
 
 const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: HomeView, 
+  },
   {
     path: "/login",
     name: "Login",

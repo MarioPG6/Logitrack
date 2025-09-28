@@ -1,95 +1,123 @@
 <template>
-  <div class="form-container">
-    <h2>Registrar Encomienda</h2>
+  <div class="grid-container">
+    <!-- Formulario Encomienda -->
+    <div class="form-container">
+      <h2>Registrar Encomienda</h2>
 
-    <form @submit.prevent="registrarEncomienda">
-      <div class="form-group">
-        <label>Nombre</label>
-        <input v-model="form.nombre" type="text" required />
-      </div>
+      <form @submit.prevent="registrarEncomienda">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input v-model="form.nombre" type="text" required />
+        </div>
 
-      <div class="form-group">
-        <label>Cédula</label>
-        <input v-model="form.cedula" type="text" required />
-      </div>
+        <div class="form-group">
+          <label>Cédula</label>
+          <input v-model="form.cedula" type="text" required />
+        </div>
 
-      <div class="form-group">
-        <label>Teléfono</label>
-        <input v-model="form.telefono" type="text" required />
-      </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input v-model="form.telefono" type="text" required />
+        </div>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input v-model="form.email" type="email" required />
-      </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input v-model="form.email" type="email" required />
+        </div>
 
-      <div class="form-group">
-        <label>Dirección</label>
-        <input v-model="form.direccion" type="text" required />
-      </div>
+        <div class="form-group">
+          <label>Dirección</label>
+          <input v-model="form.direccion" type="text" required />
+        </div>
 
-      <!-- Tipo de producto -->
-      <div class="form-group">
-        <label>Tipo de Producto</label>
-        <select v-model="form.tipoProducto" required>
-          <option disabled value="">Seleccione</option>
-          <option value="Paquete">Paquete</option>
-          <option value="Documento">Documento</option>
-        </select>
-      </div>
+        <!-- Tipo de producto -->
+        <div class="form-group">
+          <label>Tipo de Producto</label>
+          <select v-model="form.tipoProducto" required>
+            <option disabled value="">Seleccione</option>
+            <option value="Paquete">Paquete</option>
+            <option value="Documento">Documento</option>
+          </select>
+        </div>
 
-      <!-- Ciudad origen -->
-      <div class="form-group">
-        <label>Ciudad Origen</label>
-        <select v-model="form.ciudadOrigen" required>
-          <option disabled value="">Seleccione una ciudad</option>
-          <option v-for="ciudad in ciudades" :key="ciudad" :value="ciudad">
-            {{ ciudad }}
-          </option>
-        </select>
-      </div>
+        <!-- Ciudad origen -->
+        <div class="form-group">
+          <label>Ciudad Origen</label>
+          <select v-model="form.ciudadOrigen" required>
+            <option disabled value="">Seleccione una ciudad</option>
+            <option v-for="ciudad in ciudades" :key="ciudad" :value="ciudad">
+              {{ ciudad }}
+            </option>
+          </select>
+        </div>
 
-      <!-- Ciudad destino -->
-      <div class="form-group">
-        <label>Ciudad Destino</label>
-        <select v-model="form.ciudadDestino" required>
-          <option disabled value="">Seleccione una ciudad</option>
-          <option v-for="ciudad in ciudades" :key="ciudad" :value="ciudad">
-            {{ ciudad }}
-          </option>
-        </select>
-      </div>
+        <!-- Ciudad destino -->
+        <div class="form-group">
+          <label>Ciudad Destino</label>
+          <select v-model="form.ciudadDestino" required>
+            <option disabled value="">Seleccione una ciudad</option>
+            <option v-for="ciudad in ciudades" :key="ciudad" :value="ciudad">
+              {{ ciudad }}
+            </option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Forma de Pago</label>
-        <select v-model="form.formaPago" required>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Tarjeta">Tarjeta</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Forma de Pago</label>
+          <select v-model="form.formaPago" required>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Tarjeta">Tarjeta</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Tiempo</label>
-        <select v-model="form.tiempo" required>
-          <option value="Express">Express</option>
-          <option value="Normal">Normal</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Tiempo</label>
+          <select v-model="form.tiempo" required>
+            <option value="Express">Express</option>
+            <option value="Normal">Normal</option>
+          </select>
+        </div>
 
-      <button type="submit">Registrar</button>
-    </form>
+        <button type="submit">Registrar</button>
+      </form>
 
-    <p v-if="successMessage" class="success">{{ successMessage }}</p>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <p v-if="successMessage" class="success">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    </div>
+
+    <!-- Formulario Recolección -->
+    <div class="form-container">
+      <h2>Solicitar Recolección a Domicilio</h2>
+
+      <form @submit.prevent="solicitarRecoleccion">
+        <div class="form-group">
+          <label>Dirección de recogida*</label>
+          <input v-model="recoleccion.direccion" type="text" placeholder="Ej: Calle 80 # 10-20, Bogotá" required />
+        </div>
+
+        <div class="form-group">
+          <label>Fecha preferida*</label>
+          <input v-model="recoleccion.fecha" type="date" required />
+        </div>
+
+        <div class="form-group">
+          <label>Hora preferida*</label>
+          <input v-model="recoleccion.hora" type="time" required />
+        </div>
+
+        <button type="submit">Solicitar</button>
+      </form>
+
+      <p v-if="successRecoMessage" class="success">{{ successRecoMessage }}</p>
+      <p v-if="errorRecoMessage" class="error">{{ errorRecoMessage }}</p>
+    </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
 
-// Lista de ciudades principales de Colombia (puedes ampliarla)
 const ciudades = [
   "Bogotá",
   "Medellín",
@@ -116,11 +144,18 @@ const form = ref({
   ciudadDestino: "",
   formaPago: "Efectivo",
   tiempo: "Express",
-  valorDeclarado: 0,
+});
+
+const recoleccion = ref({
+  direccion: "",
+  fecha: "",
+  hora: "",
 });
 
 const successMessage = ref("");
 const errorMessage = ref("");
+const successRecoMessage = ref("");
+const errorRecoMessage = ref("");
 
 async function registrarEncomienda() {
   try {
@@ -135,9 +170,7 @@ async function registrarEncomienda() {
         user: { id: userId },
       },
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
 
@@ -145,7 +178,6 @@ async function registrarEncomienda() {
     errorMessage.value = "";
     console.log("Encomienda creada:", response.data);
 
-    // Resetear formulario
     Object.keys(form.value).forEach((key) => (form.value[key] = ""));
   } catch (error) {
     errorMessage.value = "❌ Error al registrar la encomienda";
@@ -153,12 +185,47 @@ async function registrarEncomienda() {
     console.error(error);
   }
 }
+
+async function solicitarRecoleccion() {
+  try {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(atob(token.split(".")[1]));
+    const userId = user.id;
+
+    const response = await axios.post(
+      "http://localhost:8080/recolecciones",
+      {
+        ...recoleccion.value,
+        user: { id: userId },
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    successRecoMessage.value = "✅ Recolección solicitada correctamente";
+    errorRecoMessage.value = "";
+    console.log("Recolección creada:", response.data);
+
+    Object.keys(recoleccion.value).forEach((key) => (recoleccion.value[key] = ""));
+  } catch (error) {
+    errorRecoMessage.value = "❌ Error al solicitar la recolección";
+    successRecoMessage.value = "";
+    console.error(error);
+  }
+}
 </script>
 
 <style scoped>
-.form-container {
-  max-width: 600px;
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
   margin: 40px auto;
+}
+
+.form-container {
   padding: 20px;
   background: #f9f9f9;
   border-radius: 12px;
