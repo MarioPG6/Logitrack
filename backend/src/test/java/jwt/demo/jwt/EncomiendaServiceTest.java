@@ -135,6 +135,6 @@ class EncomiendaServiceTest {
 
         assertEquals(1, resultado.size());
         assertEquals("Paquete 1", resultado.get(0).getNombre());
-        verify(encomiendaRepository).findByUserId(11);
+        verify(encomiendaRepository).findByUserId(1);
     }
 }

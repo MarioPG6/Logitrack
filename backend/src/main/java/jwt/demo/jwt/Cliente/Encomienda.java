@@ -58,6 +58,10 @@ public class Encomienda {
     @Column(nullable = false)
     private Double valorDeclarado;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private String estado = "registrado / creado";
+
     // Relación con User (quién creó la encomienda)
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) 

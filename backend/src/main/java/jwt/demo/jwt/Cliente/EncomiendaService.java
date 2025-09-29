@@ -30,23 +30,39 @@ public class EncomiendaService {
     }
 
     // Actualizar
+    // EncomiendaService.java
     public Encomienda actualizarEncomienda(Integer id, Encomienda nuevaData) {
         return encomiendaRepository.findById(id)
                 .map(encomienda -> {
-                    encomienda.setNombre(nuevaData.getNombre());
-                    encomienda.setCedula(nuevaData.getCedula());
-                    encomienda.setTelefono(nuevaData.getTelefono());
-                    encomienda.setEmail(nuevaData.getEmail());
-                    encomienda.setDireccion(nuevaData.getDireccion());
-                    encomienda.setTipoProducto(nuevaData.getTipoProducto());
-                    encomienda.setCiudadOrigen(nuevaData.getCiudadOrigen());
-                    encomienda.setCiudadDestino(nuevaData.getCiudadDestino());
-                    encomienda.setFormaPago(nuevaData.getFormaPago());
-                    encomienda.setTiempo(nuevaData.getTiempo());
-                    encomienda.setValorDeclarado(nuevaData.getValorDeclarado());
-                    encomienda.setUser(nuevaData.getUser());
+                    if (nuevaData.getNombre() != null)
+                        encomienda.setNombre(nuevaData.getNombre());
+                    if (nuevaData.getCedula() != null)
+                        encomienda.setCedula(nuevaData.getCedula());
+                    if (nuevaData.getTelefono() != null)
+                        encomienda.setTelefono(nuevaData.getTelefono());
+                    if (nuevaData.getEmail() != null)
+                        encomienda.setEmail(nuevaData.getEmail());
+                    if (nuevaData.getDireccion() != null)
+                        encomienda.setDireccion(nuevaData.getDireccion());
+                    if (nuevaData.getTipoProducto() != null)
+                        encomienda.setTipoProducto(nuevaData.getTipoProducto());
+                    if (nuevaData.getCiudadOrigen() != null)
+                        encomienda.setCiudadOrigen(nuevaData.getCiudadOrigen());
+                    if (nuevaData.getCiudadDestino() != null)
+                        encomienda.setCiudadDestino(nuevaData.getCiudadDestino());
+                    if (nuevaData.getFormaPago() != null)
+                        encomienda.setFormaPago(nuevaData.getFormaPago());
+                    if (nuevaData.getTiempo() != null)
+                        encomienda.setTiempo(nuevaData.getTiempo());
+                    if (nuevaData.getValorDeclarado() != null)
+                        encomienda.setValorDeclarado(nuevaData.getValorDeclarado());
+                    if (nuevaData.getUser() != null)
+                        encomienda.setUser(nuevaData.getUser());
+                    if (nuevaData.getEstado() != null)
+                        encomienda.setEstado(nuevaData.getEstado());
                     return encomiendaRepository.save(encomienda);
-                }).orElseThrow(() -> new RuntimeException("Encomienda no encontrada con ID " + id));
+                })
+                .orElseThrow(() -> new RuntimeException("Encomienda no encontrada con ID " + id));
     }
 
     // Eliminar

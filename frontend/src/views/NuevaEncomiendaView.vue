@@ -144,6 +144,7 @@ const form = ref({
   ciudadDestino: "",
   formaPago: "Efectivo",
   tiempo: "Express",
+  valorDeclarado: 0,
 });
 
 const recoleccion = ref({
@@ -174,6 +175,9 @@ async function registrarEncomienda() {
       }
     );
 
+    // ✅ Guardar el id de la encomienda recién creada
+    localStorage.setItem("lastEncomiendaId", response.data.id);
+
     successMessage.value = "✅ Encomienda registrada correctamente";
     errorMessage.value = "";
     console.log("Encomienda creada:", response.data);
@@ -186,34 +190,52 @@ async function registrarEncomienda() {
   }
 }
 
+
 async function solicitarRecoleccion() {
   try {
     const token = localStorage.getItem("token");
     const user = JSON.parse(atob(token.split(".")[1]));
     const userId = user.id;
 
-    const response = await axios.post(
-      "http://localhost:8080/recolecciones",
+    // ⚡ Aquí debes saber cuál encomienda vas a actualizar
+    // Supongamos que guardas el último id de encomienda registrada en localStorage
+    const encomiendaId = localStorage.getItem("lastEncomiendaId");
+
+    if (!encomiendaId) {
+      errorRecoMessage.value = "❌ No hay encomienda registrada para actualizar";
+      return;
+    }
+
+    // 🔄 Actualizar estado de la encomienda a "Pendiente de recolección"
+    await axios.put(
+      `http://localhost:8080/encomiendas/${encomiendaId}`,
       {
-        ...recoleccion.value,
+        estado: "Pendiente de recolección",
         user: { id: userId },
       },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
-    successRecoMessage.value = "✅ Recolección solicitada correctamente";
-    errorRecoMessage.value = "";
-    console.log("Recolección creada:", response.data);
+    console.log("📦 Estado de encomienda actualizado a Pendiente de recolección");
 
+    successRecoMessage.value = "✅ Estado actualizado a 'Pendiente de recolección'";
+    errorRecoMessage.value = "";
+
+    // limpiar formulario
     Object.keys(recoleccion.value).forEach((key) => (recoleccion.value[key] = ""));
   } catch (error) {
-    errorRecoMessage.value = "❌ Error al solicitar la recolección";
+    errorRecoMessage.value = "❌ Error al actualizar el estado de la encomienda";
     successRecoMessage.value = "";
     console.error(error);
   }
 }
+
+
 </script>
 
 <style scoped>
