@@ -6,6 +6,8 @@ import NuevaEncomiendaView from "../views/NuevaEncomiendaView.vue";
 import MisEncomiendasView from "../views/MisEncomiendasView.vue";
 import VerEncomiendaView from "../views/VerEncomiendaView.vue"; 
 import HomeView from "../views/HomeView.vue";
+import TrabajadorEncomiendasView from "../views/TrabajadorEncomiendasView.vue";
+import ReportarProblematica from "../views/ReportarProblematica.vue";
 
 const routes = [
   {
@@ -43,6 +45,16 @@ const routes = [
     name: "VerEncomienda",
     component: VerEncomiendaView,
     props: true, 
+  },
+  {
+    path: "/trabajador/encomiendas",
+    name: "EncomiendasDisponibles",
+    component: TrabajadorEncomiendasView,
+  },
+  {
+  path: "/trabajador/reportar-problema",
+  name: "ReportarProblematica",
+  component: ReportarProblematica,
   },
 ];
 

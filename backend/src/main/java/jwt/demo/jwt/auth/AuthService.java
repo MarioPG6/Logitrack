@@ -31,7 +31,7 @@ public class AuthService {
                                                 request.getPassword()));
 
                 User user = userRepository.findByEmail(request.getEmail())
-                                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
                 return AuthResponse.builder()
                                 .token(jwtService.getToken(user))
@@ -39,6 +39,10 @@ public class AuthService {
         }
 
         public AuthResponse register(RegisterRequest request) {
+
+                if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+                        throw new IllegalArgumentException("Usuario ya registrado");
+                }
                 User user = User.builder()
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))

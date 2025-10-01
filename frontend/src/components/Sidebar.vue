@@ -23,12 +23,23 @@
           <User class="w-5 h-5" /> Perfil
         </router-link>
 
+        <!-- CLIENTE -->
         <template v-if="userRole === 'CLIENTE'">
           <router-link to="/encomiendas/nueva" class="menu-item">
             <Package class="w-5 h-5" /> Generar Envío
           </router-link>
           <router-link to="/mis-encomiendas" class="menu-item">
             <Truck class="w-5 h-5" /> Ver Envíos
+          </router-link>
+        </template>
+
+        <!-- TRABAJADOR -->
+        <template v-if="userRole === 'TRABAJADOR'">
+          <router-link to="/trabajador/encomiendas" class="menu-item">
+            <Boxes class="w-5 h-5" /> Encomiendas Disponibles
+          </router-link>
+          <router-link to="/trabajador/reportar-problema" class="menu-item">
+            <AlertTriangle class="w-5 h-5" /> Reportar Problemática
           </router-link>
         </template>
 
@@ -55,6 +66,8 @@ import {
   MapPin,
   Package,
   Truck,
+  Boxes,
+  AlertTriangle,
 } from "lucide-vue-next";
 
 const router = useRouter();

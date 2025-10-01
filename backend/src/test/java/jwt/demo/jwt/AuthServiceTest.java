@@ -44,7 +44,6 @@ class AuthServiceTest {
     @InjectMocks
     private AuthService authService;
 
-
     @Test
     void login_DeberiaRetornarTokenSiUsuarioExiste() {
         // Arrange
@@ -69,7 +68,8 @@ class AuthServiceTest {
         LoginRequest request = new LoginRequest("notfound@email.com", "password");
 
         when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
-        UsernameNotFoundException thrown = assertThrows(UsernameNotFoundException.class, () -> authService.login(request));
+        UsernameNotFoundException thrown = assertThrows(UsernameNotFoundException.class,
+                () -> authService.login(request));
         assertEquals("Usuario no encontrado", thrown.getMessage());
     }
 
@@ -101,6 +101,37 @@ class AuthServiceTest {
         assertNotNull(response);
         assertEquals("fake-jwt", response.getToken());
         verify(userRepository).save(any(User.class));
+    }
+
+   @Test
+void login_DeberiaLanzarExcepcionSiPasswordIncorrecto() {
+    // Arrange
+    LoginRequest request = new LoginRequest("cliente@gmail.com", "wrong-pass");
+
+    when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+            .thenThrow(new RuntimeException("credenciales incorrectas"));
+
+    // Act & Assert
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> authService.login(request));
+    assertEquals("credenciales incorrectas", thrown.getMessage());
+}
+
+
+    @Test
+    void register_DeberiaLanzarExcepcionSiUsuarioYaExiste() {
+        // Arrange
+        RegisterRequest request = new RegisterRequest();
+        request.setEmail("cliente@gmail.com");
+        request.setPassword("qwerty");
+
+        User existingUser = User.builder().email(request.getEmail()).build();
+        when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(existingUser));
+
+        // Act & Assert
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                () -> authService.register(request));
+
+        assertEquals("Usuario ya registrado", thrown.getMessage());
     }
 
 }
