@@ -1,0 +1,16 @@
+[1mdiff --cc backend/src/main/resources/application.properties[m
+[1mindex 1b6e415,b170473..0000000[m
+[1m--- a/backend/src/main/resources/application.properties[m
+[1m+++ b/backend/src/main/resources/application.properties[m
+[36m@@@ -1,7 -1,7 +1,11 @@@[m
+  spring.application.name=demo.jwt[m
+  spring.datasource.url=jdbc:postgresql://localhost:5432/db_logitrack[m
+  spring.datasource.username=postgres[m
+[32m++<<<<<<< HEAD[m
+[32m +spring.datasource.password=1704[m
+[32m++=======[m
+[32m+ spring.datasource.password=dylan.21[m
+[32m++>>>>>>> 182ea34b1b5c601b1276f29a3a7118ad61573997[m
+  spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect[m
+  spring.datasource.driver-class-name=org.postgresql.Driver[m
+  spring.jpa.hibernate.ddl-auto=update[m
