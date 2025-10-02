@@ -47,6 +47,9 @@
           <router-link to="/admin/usuarios" class="menu-item">
             <Users class="w-5 h-5" /> Administrar Usuarios
           </router-link>
+          <router-link to="/admin/dashboard" class="menu-item">
+            <BarChart2 class="w-5 h-5" /> DashBoard/Estadisticas
+          </router-link>
         </template>
         <button @click="logout" class="menu-item logout-btn">
           <LogOut class="w-5 h-5" /> Cerrar Sesión
@@ -74,6 +77,7 @@ import {
   Boxes,
   AlertTriangle,
   Users,
+  BarChart2,
 } from "lucide-vue-next";
 
 const router = useRouter();

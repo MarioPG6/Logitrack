@@ -9,6 +9,9 @@ import HomeView from "../views/HomeView.vue";
 import TrabajadorEncomiendasView from "../views/TrabajadorEncomiendasView.vue";
 import ReportarProblematica from "../views/ReportarProblematica.vue";
 import AdminUsuarios from "../views/AdminUsuarios.vue";
+import DashboardView from "../views/DashboardView.vue";
+
+
 const routes = [
   {
     path: "/",
@@ -60,6 +63,12 @@ const routes = [
     path: "/admin/usuarios",
     name: "AdminUsuarios",
     component: AdminUsuarios,
+    meta: { requiresAuth: true, role: "ADMINISTRADOR" }
+  },
+  {
+    path: "/admin/dashboard",
+    name: "Dashboard",
+    component: DashboardView,
     meta: { requiresAuth: true, role: "ADMINISTRADOR" }
   },
 ];
