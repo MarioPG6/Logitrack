@@ -42,7 +42,12 @@
             <AlertTriangle class="w-5 h-5" /> Reportar Problemática
           </router-link>
         </template>
-
+        <!-- ADMINISTRADOR -->
+        <template v-if="userRole === 'ADMINISTRADOR'">
+          <router-link to="/admin/usuarios" class="menu-item">
+            <Users class="w-5 h-5" /> Administrar Usuarios
+          </router-link>
+        </template>
         <button @click="logout" class="menu-item logout-btn">
           <LogOut class="w-5 h-5" /> Cerrar Sesión
         </button>
@@ -68,6 +73,7 @@ import {
   Truck,
   Boxes,
   AlertTriangle,
+  Users,
 } from "lucide-vue-next";
 
 const router = useRouter();
@@ -76,14 +82,14 @@ const userRole = ref(null);
 
 async function checkAuth() {
   try {
-    const tokenUser = await getCurrentUser(); 
+    const tokenUser = await getCurrentUser();
     if (!tokenUser) {
       isAuthenticated.value = false;
       userRole.value = null;
       return;
     }
     isAuthenticated.value = true;
-    userRole.value = tokenUser.role; 
+    userRole.value = tokenUser.role;
   } catch {
     isAuthenticated.value = false;
     userRole.value = null;
@@ -101,7 +107,6 @@ function logout() {
   router.push("/login");
 }
 </script>
-
 
 <style scoped>
 .sidebar {

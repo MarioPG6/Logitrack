@@ -4,16 +4,16 @@ import RegisterView from "../views/RegisterView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import NuevaEncomiendaView from "../views/NuevaEncomiendaView.vue";
 import MisEncomiendasView from "../views/MisEncomiendasView.vue";
-import VerEncomiendaView from "../views/VerEncomiendaView.vue"; 
+import VerEncomiendaView from "../views/VerEncomiendaView.vue";
 import HomeView from "../views/HomeView.vue";
 import TrabajadorEncomiendasView from "../views/TrabajadorEncomiendasView.vue";
 import ReportarProblematica from "../views/ReportarProblematica.vue";
-
+import AdminUsuarios from "../views/AdminUsuarios.vue";
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: HomeView, 
+    component: HomeView,
   },
   {
     path: "/login",
@@ -41,10 +41,10 @@ const routes = [
     component: MisEncomiendasView,
   },
   {
-    path: "/encomiendas/:id",  
+    path: "/encomiendas/:id",
     name: "VerEncomienda",
     component: VerEncomiendaView,
-    props: true, 
+    props: true,
   },
   {
     path: "/trabajador/encomiendas",
@@ -52,9 +52,15 @@ const routes = [
     component: TrabajadorEncomiendasView,
   },
   {
-  path: "/trabajador/reportar-problema",
-  name: "ReportarProblematica",
-  component: ReportarProblematica,
+    path: "/trabajador/reportar-problema",
+    name: "ReportarProblematica",
+    component: ReportarProblematica,
+  },
+  {
+    path: "/admin/usuarios",
+    name: "AdminUsuarios",
+    component: AdminUsuarios,
+    meta: { requiresAuth: true, role: "ADMINISTRADOR" }
   },
 ];
 
