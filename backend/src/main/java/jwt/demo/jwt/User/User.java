@@ -42,15 +42,15 @@ public class User implements UserDetails {
     private String direction;
     private String phone;
 
-    @JsonIgnore  // 🔒 Evita exponer contraseñas en JSON
+    @JsonIgnore  
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // 🔹 Evita NullPointerException si role está null
+    
     @Override
-    @JsonIgnore  // No es necesario devolver authorities en JSON de usuario
+    @JsonIgnore  
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (role == null) {
             return List.of();
@@ -63,7 +63,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    // Métodos que exige UserDetails → siempre true para simplificar
+    
     @Override
     @JsonIgnore
     public boolean isAccountNonExpired() { return true; }
