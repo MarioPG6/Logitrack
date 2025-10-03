@@ -6,6 +6,7 @@
       <template v-if="isAuthenticated">
         <li><RouterLink to="/profile">Cuenta</RouterLink></li>
 
+        <!-- CLIENTE -->
         <template v-if="userRole === 'CLIENTE'">
           <li>
             <RouterLink to="/encomiendas/nueva">Generar encomienda</RouterLink>
@@ -13,31 +14,24 @@
           <li><RouterLink to="/mis-encomiendas">Encomiendas</RouterLink></li>
         </template>
 
+        <!-- TRABAJADOR -->
         <template v-if="userRole === 'TRABAJADOR'">
           <li>
-            <RouterLink to="/trabajador/encomiendas"
-              >Encomiendas disponibles</RouterLink
-            >
+            <RouterLink to="/trabajador/encomiendas">Encomiendas disponibles</RouterLink>
           </li>
           <li>
-            <RouterLink to="/trabajador/reportar-problema"
-              >Reportar problemática</RouterLink
-            >
+            <RouterLink to="/trabajador/reportar-problema">Reportar problemática</RouterLink>
           </li>
         </template>
 
+        <!-- ADMINISTRADOR -->
         <template v-if="userRole === 'ADMINISTRADOR'">
           <li>
             <RouterLink to="/admin/usuarios">Administrar usuarios</RouterLink>
           </li>
           <li>
-            <RouterLink to="/admin/dashboard"
-              >Dashboard / Estadísticas</RouterLink
-            >
+            <RouterLink to="/admin/dashboard">Dashboard / Estadísticas</RouterLink>
           </li>
-          <router-link to="/admin/dashboard" class="menu-item">
-            <BarChart2 class="w-5 h-5" /> DashBoard/Estadisticas
-          </router-link>
         </template>
       </template>
     </ul>
