@@ -35,6 +35,9 @@
               >Dashboard / Estadísticas</RouterLink
             >
           </li>
+          <router-link to="/admin/dashboard" class="menu-item">
+            <BarChart2 class="w-5 h-5" /> DashBoard/Estadisticas
+          </router-link>
         </template>
       </template>
     </ul>
