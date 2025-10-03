@@ -1,24 +1,80 @@
 <template>
-  <div class="app-layout">
-    <Sidebar />
-    <main class="content">
-      <router-view />
+  <div class="app">
+    <Topbar @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
+
+    <div
+      class="overlay"
+      v-show="isMobile && isSidebarOpen"
+      @click="isSidebarOpen = false"
+    ></div>
+
+    <aside class="sidebar-shell" :class="{ open: isSidebarOpen }">
+      <Sidebar />
+    </aside>
+
+    <main class="content" :class="{ pushed: isSidebarOpen && !isMobile }">
+      <RouterView />
     </main>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { RouterView } from "vue-router";
+import Topbar from "./components/Topbar.vue";
 import Sidebar from "./components/Sidebar.vue";
+
+const isSidebarOpen = ref(false);
+const isMobile = ref(false);
+const update = () => (isMobile.value = matchMedia("(max-width:900px)").matches);
+
+onMounted(() => {
+  update();
+  addEventListener("resize", update);
+});
+onBeforeUnmount(() => removeEventListener("resize", update));
 </script>
 
-<style scoped>
-.app-layout {
-  display: flex;
+<style>
+:root {
+  --topbar-h: 56px;
+  --sidebar-w: 260px;
+  --brand-green: #2e7d32;
+  --sidebar-bg: #0f172a; 
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(0, 0, 0, 0.45);
+}
+@media (min-width: 901px) {
+  .overlay {
+    display: none;
+  }
+}
+
+.sidebar-shell {
+  position: fixed;
+  top: var(--topbar-h);
+  left: 0;
+  width: var(--sidebar-w);
+  height: calc(
+    100vh - var(--topbar-h)
+  ); 
+  background: var(--sidebar-bg);
+  transform: translateX(-100%); 
+  transition: transform 0.2s ease;
+  z-index: 1050;
+  overflow-y: auto; 
+}
+.sidebar-shell.open {
+  transform: translateX(0); 
 }
 
 .content {
-  margin-left: 220px; /* Ancho del sidebar */
-  padding: 20px;
-  flex: 1;
+  padding: calc(var(--topbar-h) + 24px) 16px 24px;
+  transition: margin-left 0.2s ease;
 }
 </style>

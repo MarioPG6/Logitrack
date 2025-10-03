@@ -18,7 +18,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { useRouter } from "vue-router"; 
+import { useRouter } from "vue-router";
 import { login } from "../services/authService";
 
 const router = useRouter();
@@ -34,20 +34,18 @@ async function handleLogin() {
   try {
     const res = await login(credentials);
     if (res.token) {
-      // Guardamos el token en localStorage
       localStorage.setItem("token", res.token);
-      message.value = "Login exitoso ✅";
+      message.value = "Login exitoso";
 
-      // Redirigimos al perfil y recargamos la app
-      router.push("/profile").then(() => {
+      router.push("/").then(() => {
         window.location.reload();
       });
     } else {
-      message.value = "Credenciales incorrectas ❌";
+      message.value = "Credenciales incorrectas";
     }
   } catch (err) {
     console.error("Error en login:", err);
-    message.value = "Error en el servidor ❌";
+    message.value = "Error en el servidor";
   }
 }
 </script>
