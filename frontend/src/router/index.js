@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginView from "../views/LoginView.vue";
-import RegisterView from "../views/RegisterView.vue";
-import ProfileView from "../views/ProfileView.vue";
-import NuevaEncomiendaView from "../views/NuevaEncomiendaView.vue";
-import MisEncomiendasView from "../views/MisEncomiendasView.vue";
-import VerEncomiendaView from "../views/VerEncomiendaView.vue";
+import LoginView from "../views/user/LoginView.vue";
+import RegisterView from "../views/user/RegisterView.vue";
+import ProfileView from "../views/user/ProfileView.vue";
+import NuevaEncomiendaView from "../views/cliente/NuevaEncomiendaView.vue";
+import MisEncomiendasView from "../views/cliente/MisEncomiendasView.vue";
+import VerEncomiendaView from "../views/cliente/VerEncomiendaView.vue";
 import HomeView from "../views/HomeView.vue";
-import TrabajadorEncomiendasView from "../views/TrabajadorEncomiendasView.vue";
-import ReportarProblematica from "../views/ReportarProblematica.vue";
-import AdminUsuarios from "../views/AdminUsuarios.vue";
-import DashboardView from "../views/DashboardView.vue";
+import TrabajadorEncomiendasView from "../views/trabajador/TrabajadorEncomiendasView.vue";
+import ReportarProblematica from "../views/trabajador/ReportarProblematica.vue";
+import AdminUsuarios from "../views/administrador/AdminUsuarios.vue";
+import DashboardView from "../views/administrador/DashboardView.vue";
 
 
 const routes = [
