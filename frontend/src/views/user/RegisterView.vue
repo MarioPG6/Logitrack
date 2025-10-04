@@ -1,4 +1,3 @@
-<style scoped src="../assets/styles.css"></style>
 <template>
   <div class="container">
     <h2>Registro</h2>
@@ -17,7 +16,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { register } from "../services/authService";
+import { register } from "../../services/authService";
 
 const form = reactive({
   email: "",

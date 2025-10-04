@@ -1,4 +1,3 @@
-<style scoped src="../assets/styles.css"></style>
 <template>
   <div class="container">
     <h2>Login</h2>
@@ -19,7 +18,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "../services/authService";
+import { login } from "../../services/authService";
 
 const router = useRouter();
 
