@@ -109,7 +109,7 @@ onMounted(async () => {
       tiempo: data.tiempo,
       valorDeclarado: data.valorDeclarado,
       estado: data.estado || "Pendiente",
-      user: { id: data.user?.id }, // 👈 importante para el backend
+      user: { id: data.user?.id }, 
     };
 
     console.log("📦 Encomienda cargada:", encomienda.value);

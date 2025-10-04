@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getCurrentUser } from "../services/authService.js";
+import { getCurrentUser } from "../../services/authService.js";
 
 // Estado
 const user = ref(null);
@@ -37,7 +37,7 @@ const loading = ref(true);
 const error = ref(null);
 
 // Imagen predeterminada (asegúrate que exista en src/assets/)
-import defaultAvatar from "../assets/defaultProfile.png";
+import defaultAvatar from "../../assets/defaultProfile.png";
 
 onMounted(async () => {
   try {
