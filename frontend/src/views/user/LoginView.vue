@@ -44,7 +44,7 @@ async function handleLogin() {
     }
   } catch (err) {
     console.error("Error en login:", err);
-    message.value = "Error en el servidor";
+    message.value = "Credenciales incorrectas";
   }
 }
 </script>

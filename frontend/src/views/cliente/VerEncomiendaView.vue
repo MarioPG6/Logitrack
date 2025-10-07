@@ -3,6 +3,7 @@
     <h2>Detalles de la Encomienda</h2>
 
     <div v-if="loading">Cargando...</div>
+
     <div v-else>
       <form @submit.prevent="updateEncomienda">
         <div class="form-group">
@@ -17,17 +18,17 @@
 
         <div class="form-group">
           <label>Correo:</label>
-          <input v-model="encomienda.email" />
+          <input v-model="encomienda.email" :readonly="encomienda.estado === 'CANCELADO'" />
         </div>
 
         <div class="form-group">
           <label>Dirección:</label>
-          <input v-model="encomienda.direccion" />
+          <input v-model="encomienda.direccion" :readonly="encomienda.estado === 'CANCELADO'" />
         </div>
 
         <div class="form-group">
           <label>Teléfono:</label>
-          <input v-model="encomienda.telefono" />
+          <input v-model="encomienda.telefono" :readonly="encomienda.estado === 'CANCELADO'" />
         </div>
 
         <div class="form-group">
@@ -65,10 +66,27 @@
           <input v-model="encomienda.estado" readonly />
         </div>
 
-        <button type="submit" class="btn-guardar">Guardar Cambios</button>
+        <!-- Botón Guardar deshabilitado si está cancelado -->
+        <button 
+          type="submit" 
+          class="btn-guardar"
+          :disabled="encomienda.estado === 'CANCELADO'"
+        >
+          Guardar Cambios
+        </button>
+
+        <!-- Mensaje si está cancelada -->
+        <p v-if="encomienda.estado === 'Cancelado'" class="cancelado-msg">
+          🚫 Esta encomienda ha sido cancelada. No puedes editar sus datos.
+        </p>
       </form>
 
-      <button @click="cancelarEncomienda" class="btn-cancelar">
+      <!-- Botón cancelar visible solo si el estado lo permite -->
+      <button
+        v-if="encomienda.estado === 'ESPERANDO RECOLECCIÓN' || encomienda.estado === 'EN PROCESO'"
+        @click="cancelarEncomienda"
+        class="btn-cancelar"
+      >
         Cancelar Pedido
       </button>
     </div>
@@ -94,7 +112,6 @@ onMounted(async () => {
     });
     const data = await res.json();
 
-    // Normalizamos datos (llenamos user para poder reenviar en PUT)
     encomienda.value = {
       id: data.id,
       nombre: data.nombre,
@@ -109,10 +126,8 @@ onMounted(async () => {
       tiempo: data.tiempo,
       valorDeclarado: data.valorDeclarado,
       estado: data.estado || "Pendiente",
-      user: { id: data.user?.id }, 
+      user: { id: data.user?.id },
     };
-
-    console.log("📦 Encomienda cargada:", encomienda.value);
   } catch (error) {
     console.error("Error al obtener la encomienda:", error);
   } finally {
@@ -130,10 +145,10 @@ const updateEncomienda = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(encomienda.value), // 👈 enviamos TODO el objeto
+      body: JSON.stringify(encomienda.value),
     });
 
-    alert("Encomienda actualizada con éxito");
+    alert("✅ Encomienda actualizada con éxito");
   } catch (error) {
     console.error("Error al actualizar:", error);
   }
@@ -141,16 +156,32 @@ const updateEncomienda = async () => {
 
 const cancelarEncomienda = async () => {
   if (!confirm("¿Estás seguro de cancelar este pedido?")) return;
+
+  const estado = encomienda.value.estado;
+
+  if (estado !== "Esperando recolección" && estado !== "En proceso") {
+    alert("Solo puedes cancelar encomiendas en estado 'Esperando recolección' o 'En proceso'.");
+    return;
+  }
+
   try {
     const token = localStorage.getItem("token");
+    const updated = { ...encomienda.value, estado: "CANCELADO" };
+
     await fetch(`http://localhost:8080/encomiendas/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updated),
     });
-    alert("Encomienda cancelada");
-    router.push("/mis-encomiendas");
+
+    encomienda.value.estado = "CANCELADO";
+    alert("🚫 Encomienda cancelada correctamente.");
   } catch (error) {
     console.error("Error al cancelar:", error);
+    alert("❌ No se pudo cancelar la encomienda.");
   }
 };
 </script>
@@ -192,6 +223,12 @@ input {
   background-color: #256628;
 }
 
+.btn-guardar:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .btn-cancelar {
   margin-top: 15px;
   background-color: #ffdddd;
@@ -205,5 +242,11 @@ input {
 .btn-cancelar:hover {
   background-color: #ffbbbb;
 }
-</style>
 
+.cancelado-msg {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+</style>
