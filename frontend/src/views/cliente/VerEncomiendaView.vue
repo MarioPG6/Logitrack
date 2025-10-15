@@ -194,7 +194,7 @@ const cancelarEncomienda = async () => {
   }
 };
 
-// 🧾 Función para generar PDF con jsPDF
+// 🧾 Generar PDF con jsPDF
 const generarOrdenPago = () => {
   if (!encomienda.value) {
     alert("No hay datos de la encomienda para generar la orden de pago.");
@@ -206,7 +206,6 @@ const generarOrdenPago = () => {
 
     doc.setFontSize(16);
     doc.text("ORDEN DE PAGO - LOGITRACK", 70, 20);
-
     doc.setFontSize(12);
     doc.text(`Fecha de emisión: ${new Date().toLocaleDateString()}`, 20, 35);
 
@@ -279,11 +278,9 @@ input {
   border-radius: 6px;
   cursor: pointer;
 }
-
 .btn-guardar:hover {
   background-color: #256628;
 }
-
 .btn-guardar:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
@@ -299,7 +296,6 @@ input {
   border-radius: 6px;
   cursor: pointer;
 }
-
 .btn-orden:hover {
   background-color: #1565c0;
 }
@@ -313,7 +309,6 @@ input {
   border-radius: 6px;
   cursor: pointer;
 }
-
 .btn-cancelar:hover {
   background-color: #ffbbbb;
 }

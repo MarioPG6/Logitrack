@@ -1,6 +1,5 @@
 <template>
   <div class="grid-container">
-    <!-- Formulario Encomienda -->
     <div class="form-container">
       <h2>Registrar Encomienda</h2>
 
@@ -158,7 +157,6 @@ const errorMessage = ref("");
 // 💰 Valor declarado dinámico
 const valorDeclarado = computed(() => {
   let valor = 0;
-
   if (form.value.tipoProducto === "Documento") valor += 3000;
   if (form.value.tipoProducto === "Paquete") {
     const { altura, ancho, largo } = form.value;
@@ -168,7 +166,6 @@ const valorDeclarado = computed(() => {
   }
   if (form.value.tiempo === "Express") valor += 15000;
   if (form.value.solicitarRecoleccion === "Sí") valor += 10000;
-
   return valor;
 });
 
@@ -198,7 +195,7 @@ async function registrarEncomienda() {
         ? "ESPERANDO RECOLECCIÓN"
         : "EN PROCESO";
 
-    const response = await axios.post(
+    await axios.post(
       "http://localhost:8080/encomiendas",
       {
         ...form.value,
