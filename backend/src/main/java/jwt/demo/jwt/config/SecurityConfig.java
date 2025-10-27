@@ -34,6 +34,7 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers("/auth/**").permitAll()
                                                 .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
+                                                .requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
