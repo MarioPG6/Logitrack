@@ -33,8 +33,12 @@ public class SecurityConfig {
                                 }) // habilitar CORS
                                 .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers("/auth/**").permitAll()
-                                                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
-                                                .requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
+                                                .requestMatchers("/encomiendas/**").permitAll()
+                                                .requestMatchers("/admin/**").permitAll()
+                                                .requestMatchers("/asignaciones/**").permitAll()
+                                                //.requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
+                                                //.requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
+                                                //.requestMatchers("/asignaciones/**").hasAnyAuthority("ADMINISTRADOR", "TRABAJADOR")
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
