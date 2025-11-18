@@ -36,6 +36,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/encomiendas/**").permitAll()
                                                 .requestMatchers("/admin/**").permitAll()
                                                 .requestMatchers("/asignaciones/**").permitAll()
+                                                .requestMatchers("/problemas/**").permitAll()
                                                 //.requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
                                                 //.requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
                                                 //.requestMatchers("/asignaciones/**").hasAnyAuthority("ADMINISTRADOR", "TRABAJADOR")
