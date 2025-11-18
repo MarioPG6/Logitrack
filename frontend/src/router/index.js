@@ -8,7 +8,7 @@ import VerEncomiendaView from "../views/cliente/VerEncomiendaView.vue";
 import HomeView from "../views/HomeView.vue";
 import TrabajadorEncomiendasView from "../views/trabajador/TrabajadorEncomiendasView.vue";
 import ReportarProblematica from "../views/trabajador/ReportarProblematica.vue";
-import AdminUsuarios from "../views/administrador/AdminUsuarios.vue";
+import AsignarEncomiendas from "../views/administrador/AsignacionEncomiendas.vue";
 import DashboardView from "../views/administrador/DashboardView.vue";
 
 
@@ -60,9 +60,9 @@ const routes = [
     component: ReportarProblematica,
   },
   {
-    path: "/admin/usuarios",
-    name: "AdminUsuarios",
-    component: AdminUsuarios,
+    path: "/admin/asignar-encomiendas",
+    name: "AsignarEncomiendas",
+    component: AsignarEncomiendas,
     meta: { requiresAuth: true, role: "ADMINISTRADOR" }
   },
   {

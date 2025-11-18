@@ -65,6 +65,16 @@ public class EncomiendaService {
                 .orElseThrow(() -> new RuntimeException("Encomienda no encontrada con ID " + id));
     }
 
+    public Encomienda actualizarEstado(Integer id, String nuevoEstado) {
+    Encomienda encomienda = encomiendaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Encomienda no encontrada"));
+
+    encomienda.setEstado(nuevoEstado);
+    return encomiendaRepository.save(encomienda);
+}
+
+    
+
     // Eliminar
     public void eliminarEncomienda(Integer id) {
         encomiendaRepository.deleteById(id);

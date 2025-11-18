@@ -27,7 +27,7 @@
         <!-- ADMINISTRADOR -->
         <template v-if="userRole === 'ADMINISTRADOR'">
           <li>
-            <RouterLink to="/admin/usuarios">Administrar usuarios</RouterLink>
+            <RouterLink to="/admin/asignar-encomiendas">Administrar encomiendas</RouterLink>
           </li>
           <li>
             <RouterLink to="/admin/dashboard">Dashboard / Estadísticas</RouterLink>

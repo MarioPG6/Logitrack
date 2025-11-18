@@ -3,8 +3,8 @@ package jwt.demo.jwt.Trabajador;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jwt.demo.jwt.Cliente.Encomienda;
 import jwt.demo.jwt.Cliente.EncomiendaRepository;
@@ -33,6 +33,10 @@ public class AsignacionEncomiendaService {
         if (trabajador.getRole() != jwt.demo.jwt.User.Role.TRABAJADOR) {
             throw new RuntimeException("El usuario no es un trabajador");
         }
+
+        //Actualizar estado de la encomienda a ASIGNADO
+        encomienda.setEstado("ASIGNADO");
+        encomiendaRepo.save(encomienda); // Se guarda el nuevo estado
 
         AsignacionEncomienda asignacion = AsignacionEncomienda.builder()
                 .encomienda(encomienda)

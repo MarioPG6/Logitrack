@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,7 +29,7 @@ public class EncomiendaController {
     }
 
     // Listar todas
-    @GetMapping 
+    @GetMapping
     public List<Encomienda> listar() {
         return encomiendaService.listarEncomiendas();
     }
@@ -44,6 +45,14 @@ public class EncomiendaController {
     @PutMapping("/{id}")
     public Encomienda actualizar(@PathVariable Integer id, @RequestBody Encomienda encomienda) {
         return encomiendaService.actualizarEncomienda(id, encomienda);
+    }
+
+    //Actualizar estado
+    @PutMapping("/{id}/estado")
+    public Encomienda actualizarEstado(
+            @PathVariable Integer id,
+            @RequestParam String estado) {
+        return encomiendaService.actualizarEstado(id, estado);
     }
 
     // Eliminar

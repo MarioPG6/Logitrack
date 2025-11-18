@@ -76,4 +76,15 @@ public class AdminUsersService {
     public Optional<User> getUserById(Integer id) {
         return userRepository.findById(id);
     }
+
+    // Obtener todos los trabajadores
+    public List<User> getAllWorkers() {
+        return userRepository.findByRole(Role.TRABAJADOR);
+    }
+
+    // Obtener todos los clientes
+    public List<User> getAllClients() {
+        return userRepository.findByRole(Role.CLIENTE);
+    }
+
 }

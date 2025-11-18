@@ -57,4 +57,15 @@ public class AdminUsersController {
         return adminUsersService.getUserById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
+
+    @GetMapping("/workers")
+    public List<User> getWorkers() {
+        return adminUsersService.getAllWorkers();
+    }
+
+   
+    @GetMapping("/clients")
+    public List<User> getClients() {
+        return adminUsersService.getAllClients();
+    }
 }
