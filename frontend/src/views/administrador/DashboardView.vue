@@ -1,62 +1,71 @@
 <template>
-  <div class="p-8 bg-gray-50 min-h-screen">
-    <!-- Título principal -->
-    <h1 class="text-4xl font-extrabold text-center mb-10 text-green-700 tracking-wide">
-      📊 Panel de Control - Administrador
-    </h1>
+  <div class="p-6 bg-gray-100 min-h-screen">
 
-    <!-- Cards Resumen -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-      <div class="card">
-        <h2 class="text-lg font-semibold text-gray-600">Usuarios Totales</h2>
-        <p class="text-3xl font-bold text-green-700">{{ stats.totalUsuarios }}</p>
+    <!-- Panel Superior -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="summary-box">
+        <h3 class="title">Usuarios</h3>
+        <p class="value">{{ stats.totalUsuarios }}</p>
       </div>
-      <div class="card">
-        <h2 class="text-lg font-semibold text-gray-600">Trabajadores Activos</h2>
-        <p class="text-3xl font-bold text-green-700">{{ stats.trabajadoresActivos }}</p>
+
+      <div class="summary-box">
+        <h3 class="title">Activos</h3>
+        <p class="value">{{ stats.trabajadoresActivos }}</p>
       </div>
-      <div class="card">
-        <h2 class="text-lg font-semibold text-gray-600">Encomiendas Activas</h2>
-        <p class="text-3xl font-bold text-green-700">{{ stats.encomiendasActivas }}</p>
+
+      <div class="summary-box">
+        <h3 class="title">Encomiendas</h3>
+        <p class="value">{{ stats.encomiendasActivas }}</p>
       </div>
-      <div class="card">
-        <h2 class="text-lg font-semibold text-gray-600">Reportes Pendientes</h2>
-        <p class="text-3xl font-bold text-red-600">{{ stats.reportesPendientes }}</p>
+
+      <div class="summary-box">
+        <h3 class="title">Reportes</h3>
+        <p class="value text-red-600">{{ stats.reportesPendientes }}</p>
       </div>
     </div>
 
-    <!-- Gráficas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-      <!-- Encomiendas por mes -->
-      <div class="bg-white p-6 rounded-xl shadow-lg">
-        <h2 class="text-xl font-bold text-gray-700 mb-4">📦 Encomiendas por Mes</h2>
-        <canvas id="chartEncomiendas"></canvas>
+    <!-- Contenedor de gráficas (dos columnas) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Encomiendas por Mes -->
+      <div class="panel">
+        <h2 class="panel-title">📦 Encomiendas por Mes</h2>
+        <div class="chart-box">
+          <canvas id="chartEncomiendas"></canvas>
+        </div>
       </div>
 
-      <!-- Distribución por estado -->
-      <div class="bg-white p-6 rounded-xl shadow-lg">
-        <h2 class="text-xl font-bold text-gray-700 mb-4">🚚 Estado de Encomiendas</h2>
-        <canvas id="chartEstados"></canvas>
+      <!-- Estados de encomienda -->
+      <div class="panel">
+        <h2 class="panel-title">🚚 Estado de Encomiendas</h2>
+        <div class="chart-box">
+          <canvas id="chartEstados"></canvas>
+        </div>
       </div>
+
     </div>
 
-    <!-- Top trabajadores -->
-    <div class="bg-white p-6 rounded-xl shadow-lg mt-10">
-      <h2 class="text-xl font-bold text-gray-700 mb-4">👨‍🔧 Top 5 Trabajadores Activos</h2>
+    <!-- Top Trabajadores -->
+    <div class="panel mt-8">
+      <h2 class="panel-title">👨‍🔧 Top Trabajadores Activos</h2>
       <ul class="divide-y divide-gray-200">
-        <li v-for="(worker, index) in topTrabajadores" :key="index" class="py-3 flex justify-between">
-          <span class="font-semibold text-gray-600">{{ worker.nombre }}</span>
-          <span class="text-green-600 font-bold">{{ worker.encomiendas }} encomiendas</span>
+        <li
+          v-for="(w, i) in topTrabajadores"
+          :key="i"
+          class="flex justify-between py-2"
+        >
+          <span class="font-medium text-gray-700">{{ w.nombre }}</span>
+          <span class="font-bold text-green-700">{{ w.encomiendas }}</span>
         </li>
       </ul>
     </div>
+
   </div>
 </template>
 
 <script>
 import { onMounted, reactive } from "vue";
 import Chart from "chart.js/auto";
-import axios from "axios";
 
 export default {
   name: "DashboardView",
@@ -72,21 +81,56 @@ export default {
 
     async function fetchStats() {
       try {
-        // 🔹 Aquí debes conectar con tus endpoints de Spring Boot
-        const resStats = await axios.get("http://localhost:8080/admin/stats");
-        const resTop = await axios.get("http://localhost:8080/admin/top-trabajadores");
+        const fakeStats = {
+          totalUsuarios: 1523,
+          trabajadoresActivos: 48,
+          encomiendasActivas: 237,
+          reportesPendientes: 12,
 
-        Object.assign(stats, resStats.data);
-        topTrabajadores.splice(0, topTrabajadores.length, ...resTop.data);
+          graficoMeses: {
+            labels: [
+              "Ene",
+              "Feb",
+              "Mar",
+              "Abr",
+              "May",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dic",
+            ],
+            values: [
+              120, 150, 180, 200, 170, 230, 250, 270, 300, 280, 260, 310,
+            ],
+          },
 
-        renderCharts(resStats.data.graficoMeses, resStats.data.graficoEstados);
+          graficoEstados: {
+            labels: ["Pendiente", "En ruta", "Entregada", "Devuelta"],
+            values: [50, 120, 320, 15],
+          },
+        };
+
+        const fakeTop = [
+          { nombre: "Carlos Ramirez", encomiendas: 89 },
+          { nombre: "José González", encomiendas: 77 },
+          { nombre: "Ana Pérez", encomiendas: 71 },
+          { nombre: "Diana López", encomiendas: 68 },
+          { nombre: "Santiago Torres", encomiendas: 64 },
+        ];
+
+        Object.assign(stats, fakeStats);
+        topTrabajadores.splice(0, topTrabajadores.length, ...fakeTop);
+
+        renderCharts(fakeStats.graficoMeses, fakeStats.graficoEstados);
       } catch (error) {
-        console.error("Error cargando estadísticas", error);
+        console.error("Error cargando estadísticas simuladas", error);
       }
     }
 
     function renderCharts(dataMeses, dataEstados) {
-      // 📦 Encomiendas por Mes
       new Chart(document.getElementById("chartEncomiendas"), {
         type: "line",
         data: {
@@ -102,9 +146,11 @@ export default {
             },
           ],
         },
+        options: {
+          maintainAspectRatio: false,
+        },
       });
 
-      // 🚚 Estados de Encomiendas
       new Chart(document.getElementById("chartEstados"), {
         type: "doughnut",
         data: {
@@ -117,6 +163,9 @@ export default {
             },
           ],
         },
+        options: {
+          maintainAspectRatio: false,
+        },
       });
     }
 
@@ -127,4 +176,49 @@ export default {
 };
 </script>
 
+<style scoped>
+.summary-box {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px #00000015;
+  text-align: center;
+}
 
+.summary-box .title {
+  color: #4b5563;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.summary-box .value {
+  margin-top: 6px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #127e1c;
+}
+
+.panel {
+  background: white;
+  padding: 1.3rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px #00000015;
+}
+
+.panel-title {
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.chart-box {
+  height: 220px;
+  position: relative;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>
