@@ -1,44 +1,18 @@
-const API_URL = "http://localhost:8080/auth";
+import api from "./api";
 
 export async function login(credentials) {
-  const response = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials)
-  });
-
-  if (!response.ok) throw new Error("Error en login");
-
-  const data = await response.json();
-  localStorage.setItem("token", data.token);
-  return data;
+  const response = await api.post("/auth/login", credentials);
+  localStorage.setItem("token", response.data.token);
+  return response.data;
 }
 
 export async function register(form) {
-  const response = await fetch(`${API_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form)
-  });
-
-  if (!response.ok) throw new Error("Error en registro");
-
-  return await response.json();
+  const response = await api.post("/auth/register", form);
+  return response.data;
 }
 
 export async function getCurrentUser() {
-  const token = localStorage.getItem("token");
-  if (!token) return null;
-
-  const response = await fetch(`${API_URL}/info`, {
-    headers: {
-      "Authorization": `Bearer ${token}`
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error("Error obteniendo usuario");
-  }
-
-  return await response.json();
+  const response = await api.get("/auth/info");
+  return response.data;
 }
+

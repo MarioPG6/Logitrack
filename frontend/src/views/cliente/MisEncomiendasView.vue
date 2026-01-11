@@ -34,6 +34,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import api from "@/services/api";
 
 const encomiendas = ref([]);
 const loading = ref(true);
@@ -41,13 +42,11 @@ const loading = ref(true);
 onMounted(async () => {
   try {
     const token = localStorage.getItem("token");
-    const user = JSON.parse(atob(token.split(".")[1])); // decodifica JWT
+    const user = JSON.parse(atob(token.split(".")[1]));
     const userId = user.id;
 
-    const res = await fetch(`http://localhost:8080/encomiendas/usuario/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    encomiendas.value = await res.json();
+    const res = await api.get(`/encomiendas/usuario/${userId}`);
+    encomiendas.value = res.data;
   } catch (error) {
     console.error("Error al cargar las encomiendas:", error);
   } finally {
@@ -55,6 +54,7 @@ onMounted(async () => {
   }
 });
 </script>
+
 
 <style scoped>
 .mis-encomiendas {

@@ -33,7 +33,15 @@ public class SecurityConfig {
                                 }) // habilitar CORS
                                 .authorizeHttpRequests(authRequest -> authRequest
                                                 .requestMatchers("/auth/**").permitAll()
+<<<<<<< Updated upstream
                                                 .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
+=======
+                                                .requestMatchers("/problemas/**").permitAll()
+                                                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
+                                                .requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
+                                                .requestMatchers("/asignaciones/**")
+                                                .hasAnyAuthority("ADMINISTRADOR", "TRABAJADOR")
+>>>>>>> Stashed changes
                                                 .anyRequest().authenticated())
                                 .sessionManagement(sessionManager -> sessionManager
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -48,7 +56,8 @@ public class SecurityConfig {
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 CorsConfiguration config = new CorsConfiguration();
                 config.setAllowCredentials(true);
-                config.setAllowedOrigins(List.of("http://localhost:5173")); // frontend
+                config.setAllowedOrigins(List.of("http://localhost",
+                                "http://localhost:80")); // frontend
                 config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
 

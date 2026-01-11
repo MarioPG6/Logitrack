@@ -50,7 +50,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import api from "@/services/api";
 
 const encomiendas = ref([]);
 const successMessage = ref("");
@@ -58,11 +58,8 @@ const errorMessage = ref("");
 
 async function cargarEncomiendas() {
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.get("http://localhost:8080/encomiendas", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    encomiendas.value = response.data;
+    const { data } = await api.get("/encomiendas");
+    encomiendas.value = data;
   } catch (error) {
     console.error("❌ Error cargando encomiendas:", error);
     errorMessage.value = "No se pudieron cargar las encomiendas";
@@ -71,17 +68,13 @@ async function cargarEncomiendas() {
 
 async function actualizarEstado(id, nuevoEstado) {
   try {
-    const token = localStorage.getItem("token");
-    await axios.put(
-      `http://localhost:8080/encomiendas/${id}`,
-      { estado: nuevoEstado },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    await api.put(`/encomiendas/${id}`, {
+      estado: nuevoEstado,
+    });
 
     successMessage.value = `✅ Encomienda ${id} actualizada a ${nuevoEstado}`;
     errorMessage.value = "";
 
-    // Recargar lista
     cargarEncomiendas();
   } catch (error) {
     console.error("❌ Error actualizando estado:", error);
@@ -93,6 +86,7 @@ onMounted(() => {
   cargarEncomiendas();
 });
 </script>
+
 
 <style scoped>
 .table-container {

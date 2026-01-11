@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import api from "@/services/api";
 
 const encomiendas = ref([]);
 const problema = ref({
@@ -57,16 +57,22 @@ const errorMessage = ref("");
 // 🔹 Obtener todas las encomiendas al cargar
 async function cargarEncomiendas() {
   try {
+<<<<<<< Updated upstream
     const token = localStorage.getItem("token");
     const response = await axios.get("http://localhost:8080/encomiendas", {
       headers: { Authorization: `Bearer ${token}` },
     });
     encomiendas.value = response.data;
+=======
+    const { data } = await api.get("/encomiendas");
+    encomiendas.value = data;
+>>>>>>> Stashed changes
   } catch (error) {
     console.error("Error cargando encomiendas:", error);
   }
 }
 
+<<<<<<< Updated upstream
 // 🔹 Reportar problemática
 async function reportarProblema() {
   try {
@@ -84,6 +90,18 @@ async function reportarProblema() {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+=======
+async function reportarProblema() {
+  try {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(atob(token.split(".")[1])); // trabajador
+
+    await api.post("/problemas", {
+      trabajadorId: user.id,
+      encomiendaId: problema.value.encomiendaId,
+      descripcion: problema.value.descripcion,
+    });
+>>>>>>> Stashed changes
 
     successMessage.value = "✅ Problemática reportada correctamente.";
     errorMessage.value = "";
@@ -101,6 +119,7 @@ onMounted(() => {
   cargarEncomiendas();
 });
 </script>
+
 
 <style scoped>
 .problema-container {
