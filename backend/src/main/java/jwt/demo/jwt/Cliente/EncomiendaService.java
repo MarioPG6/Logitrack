@@ -15,6 +15,7 @@ public class EncomiendaService {
     }
 
     // Crear encomienda
+    @SuppressWarnings("null")
     public Encomienda crearEncomienda(Encomienda encomienda) {
         return encomiendaRepository.save(encomienda);
     }
@@ -25,12 +26,14 @@ public class EncomiendaService {
     }
 
     // Buscar por ID
+    @SuppressWarnings("null")
     public Optional<Encomienda> obtenerPorId(Integer id) {
         return encomiendaRepository.findById(id);
     }
 
     // Actualizar
     // EncomiendaService.java
+    @SuppressWarnings("null")
     public Encomienda actualizarEncomienda(Integer id, Encomienda nuevaData) {
         return encomiendaRepository.findById(id)
                 .map(encomienda -> {
@@ -66,6 +69,7 @@ public class EncomiendaService {
     }
 
     // Eliminar
+    @SuppressWarnings("null")
     public void eliminarEncomienda(Integer id) {
         encomiendaRepository.deleteById(id);
     }

@@ -73,6 +73,7 @@ class AuthServiceTest {
         assertEquals("Usuario no encontrado", thrown.getMessage());
     }
 
+    @SuppressWarnings("null")
     @Test
     void register_DeberiaGuardarUsuarioYRetornarToken() {
         RegisterRequest request = new RegisterRequest();

@@ -105,6 +105,7 @@ class EncomiendaServiceTest {
         verify(encomiendaRepository).save(original);
     }
 
+    @SuppressWarnings("null")
     @Test
     void actualizarEncomienda_DeberiaLanzarExcepcionSiNoExiste() {
         Encomienda nueva = new Encomienda();

@@ -22,46 +22,45 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-        private final JwtAuthenticationFilter jwtAuthenticationFilter;
-        private final AuthenticationProvider authProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authProvider;
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                return http
-                                .csrf(csrf -> csrf.disable())
-                                .cors(cors -> {
-                                }) // habilitar CORS
-                                .authorizeHttpRequests(authRequest -> authRequest
-                                                .requestMatchers("/auth/**").permitAll()
-<<<<<<< Updated upstream
-                                                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
-=======
-                                                .requestMatchers("/problemas/**").permitAll()
-                                                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
-                                                .requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
-                                                .requestMatchers("/asignaciones/**")
-                                                .hasAnyAuthority("ADMINISTRADOR", "TRABAJADOR")
->>>>>>> Stashed changes
-                                                .anyRequest().authenticated())
-                                .sessionManagement(sessionManager -> sessionManager
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .authenticationProvider(authProvider)
-                                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                                .build();
-        }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> {})
+            .authorizeHttpRequests(authRequest -> authRequest
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/problemas/**").permitAll()
+                .requestMatchers("/encomiendas/**").hasAnyAuthority("CLIENTE")
+                .requestMatchers("/admin/**").hasAnyAuthority("ADMINISTRADOR")
+                .requestMatchers("/asignaciones/**")
+                    .hasAnyAuthority("ADMINISTRADOR", "TRABAJADOR")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(sessionManager -> sessionManager
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .authenticationProvider(authProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+    }
 
-        // Configuración global de CORS
-        @Bean
-        public CorsFilter corsFilter() {
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowCredentials(true);
-                config.setAllowedOrigins(List.of("http://localhost",
-                                "http://localhost:80")); // frontend
-                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                config.setAllowedHeaders(List.of("*"));
+    // Configuración global de CORS
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of(
+            "http://localhost",
+            "http://localhost:80"
+        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
 
-                source.registerCorsConfiguration("/**", config);
-                return new CorsFilter(source);
-        }
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 }
