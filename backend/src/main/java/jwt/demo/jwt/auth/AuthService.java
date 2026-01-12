@@ -38,6 +38,7 @@ public class AuthService {
                                 .build();
         }
 
+        @SuppressWarnings("null")
         public AuthResponse register(RegisterRequest request) {
 
                 if (userRepository.findByEmail(request.getEmail()).isPresent()) {
