@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EncomiendaService {
 
@@ -16,6 +18,7 @@ public class EncomiendaService {
 
     // Crear encomienda
     @SuppressWarnings("null")
+     @Transactional
     public Encomienda crearEncomienda(Encomienda encomienda) {
         return encomiendaRepository.save(encomienda);
     }

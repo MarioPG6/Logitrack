@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+export PGPASSWORD="$POSTGRES_PASSWORD"
 echo "Iniciando restauración de la base de datos PostgreSQL..."
 
 echo "Base de datos: $POSTGRES_DB"
