@@ -13,8 +13,8 @@ services:
       - db
 
   db:
-    image: postgres:15
-    container_name: logitrack-db
+    image: postgres:17
+    container_name: db_logitrack
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
