@@ -1,4 +1,4 @@
-package jwt.demo.jwt.config;
+package com.mariopg.logitrack.config;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import jwt.demo.jwt.jwt.JwtAuthenticationFilter;
+import com.mariopg.logitrack.jwt.JwtAuthenticationFilter;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration

@@ -1,4 +1,4 @@
-package jwt.demo.jwt.Cliente;
+package com.mariopg.logitrack.Cliente;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;

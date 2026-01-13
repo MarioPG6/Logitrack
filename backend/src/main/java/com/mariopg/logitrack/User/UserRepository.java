@@ -1,4 +1,4 @@
-package jwt.demo.jwt.User;
+package com.mariopg.logitrack.User;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package jwt.demo.jwt.auth;
+package com.mariopg.logitrack.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +8,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mariopg.logitrack.User.Role;
+import com.mariopg.logitrack.User.User;
+import com.mariopg.logitrack.User.UserRepository;
+import com.mariopg.logitrack.jwt.JwtService;
+
 import jakarta.servlet.http.HttpServletRequest;
-import jwt.demo.jwt.User.Role;
-import jwt.demo.jwt.User.User;
-import jwt.demo.jwt.User.UserRepository;
-import jwt.demo.jwt.jwt.JwtService;
+
 import lombok.RequiredArgsConstructor;
 
 @Service

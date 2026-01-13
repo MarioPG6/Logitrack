@@ -1,4 +1,4 @@
-package jwt.demo.jwt.config;
+package com.mariopg.logitrack.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jwt.demo.jwt.User.UserRepository;
+import com.mariopg.logitrack.User.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration

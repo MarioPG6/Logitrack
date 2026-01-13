@@ -1,6 +1,5 @@
-package jwt.demo.jwt.auth;
+package com.mariopg.logitrack.auth;
 
-import jwt.demo.jwt.User.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
     String email;
     String password;
-    String firstname;
-    String lastname;
-    String direction;
-    String phone;
-    Role role;
 }

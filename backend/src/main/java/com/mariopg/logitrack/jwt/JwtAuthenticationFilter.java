@@ -1,4 +1,4 @@
-package jwt.demo.jwt.jwt;
+package com.mariopg.logitrack.jwt;
 
 import java.io.IOException;
 

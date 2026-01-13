@@ -1,4 +1,4 @@
-package jwt.demo.jwt;
+package com.mariopg.logitrack;
 
 import java.util.Optional;
 
@@ -18,13 +18,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jwt.demo.jwt.User.User;
-import jwt.demo.jwt.User.UserRepository;
-import jwt.demo.jwt.auth.AuthResponse;
-import jwt.demo.jwt.auth.AuthService;
-import jwt.demo.jwt.auth.LoginRequest;
-import jwt.demo.jwt.auth.RegisterRequest;
-import jwt.demo.jwt.jwt.JwtService;
+import com.mariopg.logitrack.User.User;
+import com.mariopg.logitrack.User.UserRepository;
+import com.mariopg.logitrack.auth.AuthResponse;
+import com.mariopg.logitrack.auth.AuthService;
+import com.mariopg.logitrack.auth.LoginRequest;
+import com.mariopg.logitrack.auth.RegisterRequest;
+import com.mariopg.logitrack.jwt.JwtService;
+
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {

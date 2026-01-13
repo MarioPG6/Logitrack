@@ -1,4 +1,4 @@
-package jwt.demo.jwt.User;
+package com.mariopg.logitrack.User;
 
 public enum Role {
     CLIENTE,

@@ -1,4 +1,4 @@
-package jwt.demo.jwt.auth;
+package com.mariopg.logitrack.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

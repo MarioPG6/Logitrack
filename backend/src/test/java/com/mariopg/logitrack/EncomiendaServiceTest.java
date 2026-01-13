@@ -1,4 +1,4 @@
-package jwt.demo.jwt;
+package com.mariopg.logitrack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,9 +19,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import jwt.demo.jwt.Cliente.Encomienda;
-import jwt.demo.jwt.Cliente.EncomiendaRepository;
-import jwt.demo.jwt.Cliente.EncomiendaService;
+import com.mariopg.logitrack.Cliente.Encomienda;
+import com.mariopg.logitrack.Cliente.EncomiendaRepository;
+import com.mariopg.logitrack.Cliente.EncomiendaService;
+
 
 @ExtendWith(MockitoExtension.class)
 class EncomiendaServiceTest {

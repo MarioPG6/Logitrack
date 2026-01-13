@@ -1,4 +1,4 @@
-package jwt.demo.jwt.jwt;
+package com.mariopg.logitrack.jwt;
 
 import java.security.Key;
 import java.util.Date;
@@ -9,12 +9,14 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.mariopg.logitrack.User.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jwt.demo.jwt.User.User;
+
 
 @Service
 public class JwtService {

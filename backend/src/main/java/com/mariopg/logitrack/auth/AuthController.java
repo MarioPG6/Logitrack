@@ -1,4 +1,4 @@
-package jwt.demo.jwt.auth;
+package com.mariopg.logitrack.auth;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
