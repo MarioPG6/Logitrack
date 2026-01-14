@@ -115,13 +115,8 @@
 </template>
 
 <script setup>
-<<<<<<< Updated upstream
-import { ref } from "vue";
-import axios from "axios";
-=======
 import { ref, computed } from "vue";
 import api from "@/services/api";
->>>>>>> Stashed changes
 
 const ciudades = [
   "Bogotá",
@@ -169,18 +164,6 @@ async function registrarEncomienda() {
     const user = JSON.parse(atob(token.split(".")[1]));
     const userId = user.id;
 
-<<<<<<< Updated upstream
-    const response = await axios.post(
-      "http://localhost:8080/encomiendas",
-      {
-        ...form.value,
-        user: { id: userId },
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-=======
     const estado =
       form.value.solicitarRecoleccion === "Sí"
         ? "ESPERANDO RECOLECCIÓN"
@@ -196,7 +179,6 @@ async function registrarEncomienda() {
           : null,
       user: { id: userId },
     });
->>>>>>> Stashed changes
 
     // ✅ Guardar el id de la encomienda recién creada
     localStorage.setItem("lastEncomiendaId", response.data.id);
@@ -205,12 +187,8 @@ async function registrarEncomienda() {
     errorMessage.value = "";
     console.log("Encomienda creada:", response.data);
 
-<<<<<<< Updated upstream
-    Object.keys(form.value).forEach((key) => (form.value[key] = ""));
-=======
     Object.keys(form.value).forEach((k) => (form.value[k] = ""));
     Object.keys(recoleccion.value).forEach((k) => (recoleccion.value[k] = ""));
->>>>>>> Stashed changes
   } catch (error) {
     errorMessage.value = "❌ Error al registrar la encomienda";
     successMessage.value = "";

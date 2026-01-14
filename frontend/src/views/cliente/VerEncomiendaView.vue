@@ -17,38 +17,26 @@
 
         <div class="form-group">
           <label>Correo:</label>
-<<<<<<< Updated upstream
-          <input v-model="encomienda.email" />
-=======
           <input
             v-model="encomienda.email"
             :readonly="encomienda.estado === 'CANCELADO'"
           />
->>>>>>> Stashed changes
         </div>
 
         <div class="form-group">
           <label>Dirección:</label>
-<<<<<<< Updated upstream
-          <input v-model="encomienda.direccion" />
-=======
           <input
             v-model="encomienda.direccion"
             :readonly="encomienda.estado === 'CANCELADO'"
           />
->>>>>>> Stashed changes
         </div>
 
         <div class="form-group">
           <label>Teléfono:</label>
-<<<<<<< Updated upstream
-          <input v-model="encomienda.telefono" />
-=======
           <input
             v-model="encomienda.telefono"
             :readonly="encomienda.estado === 'CANCELADO'"
           />
->>>>>>> Stashed changes
         </div>
 
         <div class="form-group">
@@ -86,12 +74,6 @@
           <input v-model="encomienda.estado" readonly />
         </div>
 
-<<<<<<< Updated upstream
-        <button type="submit" class="btn-guardar">Guardar Cambios</button>
-      </form>
-
-      <button @click="cancelarEncomienda" class="btn-cancelar">
-=======
         <button
           type="submit"
           class="btn-guardar"
@@ -126,7 +108,6 @@
         @click="cancelarEncomienda"
         class="btn-cancelar"
       >
->>>>>>> Stashed changes
         Cancelar Pedido
       </button>
     </div>
@@ -136,13 +117,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-<<<<<<< Updated upstream
-=======
-import { generarOrdenPagoPDF } from "@/services/ordenPagoService.js";
 import api from "@/services/api";
 import LineaTiempoEstados from "@/components/LineaTiempoEstados.vue";
 import { notificarCambioEstado } from "@/services/notificacionEstadosService.js";
->>>>>>> Stashed changes
 
 const route = useRoute();
 
@@ -152,15 +129,7 @@ const id = route.params.id;
 
 onMounted(async () => {
   try {
-<<<<<<< Updated upstream
-    const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:8080/encomiendas/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-=======
     const { data } = await api.get(`/encomiendas/${id}`);
->>>>>>> Stashed changes
 
     // Normalizamos datos (llenamos user para poder reenviar en PUT)
     encomienda.value = {
@@ -188,22 +157,6 @@ onMounted(async () => {
   }
 });
 
-<<<<<<< Updated upstream
-const updateEncomienda = async () => {
-  try {
-    const token = localStorage.getItem("token");
-
-    await fetch(`http://localhost:8080/encomiendas/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(encomienda.value), // 👈 enviamos TODO el objeto
-    });
-
-    alert("Encomienda actualizada con éxito");
-=======
 /*Notificaciones automáticas al cambiar estado */
 watch(
   () => encomienda.value?.estado,
@@ -218,7 +171,6 @@ const updateEncomienda = async () => {
   try {
     await api.put(`/encomiendas/${id}`, encomienda.value);
     alert("✅ Encomienda actualizada con éxito");
->>>>>>> Stashed changes
   } catch (error) {
     console.error("Error al actualizar:", error);
   }
@@ -226,13 +178,6 @@ const updateEncomienda = async () => {
 
 const cancelarEncomienda = async () => {
   if (!confirm("¿Estás seguro de cancelar este pedido?")) return;
-<<<<<<< Updated upstream
-  try {
-    const token = localStorage.getItem("token");
-    await fetch(`http://localhost:8080/encomiendas/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-=======
 
   const estado = encomienda.value.estado;
 
@@ -247,7 +192,6 @@ const cancelarEncomienda = async () => {
     await api.put(`/encomiendas/${id}`, {
       ...encomienda.value,
       estado: "CANCELADO",
->>>>>>> Stashed changes
     });
     alert("Encomienda cancelada");
     router.push("/mis-encomiendas");

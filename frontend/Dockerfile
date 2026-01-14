@@ -1,20 +1,17 @@
-# ========= 1. Build Vue =========
-FROM node:20-alpine AS build
-
+# ========= Build =========
+FROM node:22-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
-
 ENV NODE_ENV=production
 
 RUN npm run build
-# genera /dist
 
-# ========= 2. Nginx =========
-FROM nginx:alpine
+# ========= Nginx =========
+FROM nginx:1.27-alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
 
