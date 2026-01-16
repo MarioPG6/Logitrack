@@ -1,7 +1,6 @@
 package com.mariopg.logitrack.encomiendas;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,10 +16,18 @@ public class EncomiendaService {
     }
 
     // Crear encomienda
-    @SuppressWarnings("null")
-     @Transactional
+    @Transactional
     public Encomienda crearEncomienda(Encomienda encomienda) {
-        return encomiendaRepository.save(encomienda);
+
+        if (encomienda == null) {
+            throw new RuntimeException("La encomienda no puede ser nula.");
+        }
+
+        try {
+            return encomiendaRepository.save(encomienda);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al crear la encomienda. Verifique los datos enviados.");
+        }
     }
 
     // Listar todas
@@ -30,55 +37,70 @@ public class EncomiendaService {
 
     // Buscar por ID
     @SuppressWarnings("null")
-    public Optional<Encomienda> obtenerPorId(Integer id) {
-        return encomiendaRepository.findById(id);
+    public Encomienda obtenerPorId(Integer id) {
+        return encomiendaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encontró la encomienda con ID: " + id));
     }
 
-    // Actualizar
-    // EncomiendaService.java
+    // Actualizar encomienda - cliente (solo datos básicos)
     @SuppressWarnings("null")
-    public Encomienda actualizarEncomienda(Integer id, Encomienda nuevaData) {
+    @Transactional
+    public Encomienda actualizarEncomiendaCliente(Integer id, Encomienda nuevaData) {
+
+        if (nuevaData == null) {
+            throw new RuntimeException("Los datos enviados no pueden ser nulos.");
+        }
+
         return encomiendaRepository.findById(id)
                 .map(encomienda -> {
+
+                    // Bloquear si ya fue enviada
+                    if (encomienda.getEstado() == EstadoEncomienda.ENVIADO) {
+                        throw new RuntimeException("La encomienda ya fue enviada y no se puede modificar.");
+                    }
+
                     if (nuevaData.getNombre() != null)
                         encomienda.setNombre(nuevaData.getNombre());
-                    if (nuevaData.getCedula() != null)
-                        encomienda.setCedula(nuevaData.getCedula());
+
                     if (nuevaData.getTelefono() != null)
                         encomienda.setTelefono(nuevaData.getTelefono());
+
                     if (nuevaData.getEmail() != null)
                         encomienda.setEmail(nuevaData.getEmail());
+
                     if (nuevaData.getDireccion() != null)
                         encomienda.setDireccion(nuevaData.getDireccion());
-                    if (nuevaData.getTipoProducto() != null)
-                        encomienda.setTipoProducto(nuevaData.getTipoProducto());
-                    if (nuevaData.getCiudadOrigen() != null)
-                        encomienda.setCiudadOrigen(nuevaData.getCiudadOrigen());
+
                     if (nuevaData.getCiudadDestino() != null)
                         encomienda.setCiudadDestino(nuevaData.getCiudadDestino());
-                    if (nuevaData.getFormaPago() != null)
-                        encomienda.setFormaPago(nuevaData.getFormaPago());
-                    if (nuevaData.getTiempo() != null)
-                        encomienda.setTiempo(nuevaData.getTiempo());
-                    if (nuevaData.getValorDeclarado() != null)
-                        encomienda.setValorDeclarado(nuevaData.getValorDeclarado());
-                    if (nuevaData.getUser() != null)
-                        encomienda.setUser(nuevaData.getUser());
-                    if (nuevaData.getEstado() != null)
-                        encomienda.setEstado(nuevaData.getEstado());
+
                     return encomiendaRepository.save(encomienda);
                 })
-                .orElseThrow(() -> new RuntimeException("Encomienda no encontrada con ID " + id));
+                .orElseThrow(
+                        () -> new RuntimeException("No se puede actualizar: encomienda no encontrada con ID " + id));
     }
 
     // Eliminar
     @SuppressWarnings("null")
+    @Transactional
     public void eliminarEncomienda(Integer id) {
+
+        if (!encomiendaRepository.existsById(id)) {
+            throw new RuntimeException("No se puede eliminar: encomienda no encontrada con ID " + id);
+        }
+
         encomiendaRepository.deleteById(id);
     }
 
     // Listar por usuario
     public List<Encomienda> listarPorUsuario(Integer userId) {
-        return encomiendaRepository.findByUserId(userId);
+
+        List<Encomienda> encomiendas = encomiendaRepository.findByUserId(userId);
+
+        if (encomiendas.isEmpty()) {
+            throw new RuntimeException("El usuario no tiene encomiendas registradas.");
+        }
+
+        return encomiendas;
     }
 }

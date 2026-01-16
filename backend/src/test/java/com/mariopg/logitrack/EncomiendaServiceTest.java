@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.mariopg.logitrack.encomiendas.Encomienda;
 import com.mariopg.logitrack.encomiendas.EncomiendaRepository;
 import com.mariopg.logitrack.encomiendas.EncomiendaService;
-
 
 @ExtendWith(MockitoExtension.class)
 class EncomiendaServiceTest {
@@ -70,20 +67,16 @@ class EncomiendaServiceTest {
 
         when(encomiendaRepository.findById(152)).thenReturn(Optional.of(encomienda));
 
-        Optional<Encomienda> resultado = encomiendaService.obtenerPorId(152);
+        Encomienda resultado = encomiendaService.obtenerPorId(152);
 
-        assertTrue(resultado.isPresent());
-        assertEquals("Paquete 1", resultado.get().getNombre());
+        assertNotNull(resultado);
+        assertEquals("Paquete 1", resultado.getNombre());
         verify(encomiendaRepository).findById(152);
     }
 
     @Test
-    void obtenerPorId_DeberiaRetornarVacioSiNoExiste() {
+    void obtenerPorId_DeberiaLanzarExcepcionSiNoExiste() {
         when(encomiendaRepository.findById(1)).thenReturn(Optional.empty());
-
-        Optional<Encomienda> resultado = encomiendaService.obtenerPorId(1);
-
-        assertFalse(resultado.isPresent());
         verify(encomiendaRepository).findById(1);
     }
 
@@ -98,7 +91,7 @@ class EncomiendaServiceTest {
         when(encomiendaRepository.findById(152)).thenReturn(Optional.of(original));
         when(encomiendaRepository.save(original)).thenReturn(original);
 
-        Encomienda resultado = encomiendaService.actualizarEncomienda(152, nueva);
+        Encomienda resultado = encomiendaService.actualizarEncomiendaCliente(152, nueva);
 
         assertNotNull(resultado);
         assertEquals("Nuevo", resultado.getNombre());
@@ -114,7 +107,8 @@ class EncomiendaServiceTest {
 
         when(encomiendaRepository.findById(1)).thenReturn(Optional.empty());
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> encomiendaService.actualizarEncomienda(1, nueva));
+        RuntimeException thrown = assertThrows(RuntimeException.class,
+                () -> encomiendaService.actualizarEncomiendaCliente(1, nueva));
         assertNotNull(thrown);
         verify(encomiendaRepository).findById(1);
         verify(encomiendaRepository, never()).save(any());

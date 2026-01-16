@@ -36,14 +36,14 @@ public class EncomiendaController {
     // Obtener por ID
     @GetMapping("/{id}")
     public Encomienda obtenerPorId(@PathVariable Integer id) {
-        return encomiendaService.obtenerPorId(id)
-                .orElseThrow(() -> new RuntimeException("Encomienda no encontrada con ID " + id));
+        return encomiendaService.obtenerPorId(id);
+                
     }
 
     // Actualizar
     @PutMapping("/{id}")
     public Encomienda actualizar(@PathVariable Integer id, @RequestBody Encomienda encomienda) {
-        return encomiendaService.actualizarEncomienda(id, encomienda);
+        return encomiendaService.actualizarEncomiendaCliente(id, encomienda);
     }
 
     // Eliminar
