@@ -19,9 +19,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.mariopg.logitrack.Cliente.Encomienda;
-import com.mariopg.logitrack.Cliente.EncomiendaRepository;
-import com.mariopg.logitrack.Cliente.EncomiendaService;
+import com.mariopg.logitrack.encomiendas.Encomienda;
+import com.mariopg.logitrack.encomiendas.EncomiendaRepository;
+import com.mariopg.logitrack.encomiendas.EncomiendaService;
 
 
 @ExtendWith(MockitoExtension.class)

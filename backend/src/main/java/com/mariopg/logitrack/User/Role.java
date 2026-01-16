@@ -1,4 +1,4 @@
-package com.mariopg.logitrack.User;
+package com.mariopg.logitrack.user;
 
 public enum Role {
     CLIENTE,

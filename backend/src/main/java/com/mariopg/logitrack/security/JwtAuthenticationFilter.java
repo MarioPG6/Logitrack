@@ -1,4 +1,4 @@
-package com.mariopg.logitrack.jwt;
+package com.mariopg.logitrack.security;
 
 import java.io.IOException;
 

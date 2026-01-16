@@ -1,7 +1,7 @@
 package com.mariopg.logitrack.auth;
 
 
-import com.mariopg.logitrack.User.Role;
+import com.mariopg.logitrack.user.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

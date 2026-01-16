@@ -1,6 +1,6 @@
-package com.mariopg.logitrack.Cliente;
+package com.mariopg.logitrack.encomiendas;
 
-import com.mariopg.logitrack.User.User;
+import com.mariopg.logitrack.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

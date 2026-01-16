@@ -8,13 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mariopg.logitrack.User.Role;
-import com.mariopg.logitrack.User.User;
-import com.mariopg.logitrack.User.UserRepository;
-import com.mariopg.logitrack.jwt.JwtService;
+import com.mariopg.logitrack.security.JwtService;
+import com.mariopg.logitrack.user.Role;
+import com.mariopg.logitrack.user.User;
+import com.mariopg.logitrack.user.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
