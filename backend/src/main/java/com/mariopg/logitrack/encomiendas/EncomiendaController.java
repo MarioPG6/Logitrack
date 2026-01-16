@@ -28,7 +28,7 @@ public class EncomiendaController {
     }
 
     // Listar todas
-    @GetMapping 
+    @GetMapping
     public List<Encomienda> listar() {
         return encomiendaService.listarEncomiendas();
     }
@@ -37,7 +37,7 @@ public class EncomiendaController {
     @GetMapping("/{id}")
     public Encomienda obtenerPorId(@PathVariable Integer id) {
         return encomiendaService.obtenerPorId(id);
-                
+
     }
 
     // Actualizar
@@ -57,4 +57,10 @@ public class EncomiendaController {
     public List<Encomienda> listarPorUsuario(@PathVariable Integer userId) {
         return encomiendaService.listarPorUsuario(userId);
     }
+
+    @GetMapping("/mias")
+    public List<Encomienda> misEncomiendas() {
+        return encomiendaService.listarMisEncomiendas();
+    }
+
 }

@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EncomiendaRepository extends JpaRepository<Encomienda, Integer> {
     List<Encomienda> findByUserId(Integer userId);
+    List<Encomienda> findByUserEmail(String email);
+
 }
