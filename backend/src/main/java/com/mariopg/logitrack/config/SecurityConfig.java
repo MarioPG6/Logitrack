@@ -14,7 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.mariopg.logitrack.jwt.JwtAuthenticationFilter;
+import com.mariopg.logitrack.security.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 

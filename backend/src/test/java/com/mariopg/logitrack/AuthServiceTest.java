@@ -18,13 +18,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mariopg.logitrack.User.User;
-import com.mariopg.logitrack.User.UserRepository;
 import com.mariopg.logitrack.auth.AuthResponse;
 import com.mariopg.logitrack.auth.AuthService;
 import com.mariopg.logitrack.auth.LoginRequest;
 import com.mariopg.logitrack.auth.RegisterRequest;
-import com.mariopg.logitrack.jwt.JwtService;
+import com.mariopg.logitrack.security.JwtService;
+import com.mariopg.logitrack.user.User;
+import com.mariopg.logitrack.user.UserRepository;
 
 
 @ExtendWith(MockitoExtension.class)

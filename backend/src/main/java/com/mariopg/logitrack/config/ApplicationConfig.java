@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mariopg.logitrack.User.UserRepository;
+import com.mariopg.logitrack.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

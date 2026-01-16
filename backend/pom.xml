@@ -9,10 +9,10 @@
         <version>3.5.9</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
-    <groupId>jwt</groupId>
-    <artifactId>demo.jwt</artifactId>
+    <groupId>com.mariopg</groupId>
+    <artifactId>logitrack</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo.jwt</name>
+    <name>logitrack</name>
     <description>Demo project for Spring Boot</description>
     <url />
     <licenses>

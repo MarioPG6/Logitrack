@@ -1,4 +1,4 @@
-package com.mariopg.logitrack.Cliente;
+package com.mariopg.logitrack.encomiendas;
 
 import java.util.List;
 import java.util.Optional;

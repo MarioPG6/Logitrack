@@ -1,4 +1,4 @@
-package com.mariopg.logitrack.jwt;
+package com.mariopg.logitrack.security;
 
 import java.security.Key;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.mariopg.logitrack.User.User;
+import com.mariopg.logitrack.user.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
