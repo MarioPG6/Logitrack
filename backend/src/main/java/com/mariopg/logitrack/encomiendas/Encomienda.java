@@ -4,6 +4,8 @@ import com.mariopg.logitrack.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -60,11 +62,12 @@ public class Encomienda {
     private Double valorDeclarado;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    private String estado = "registrado / creado";
+    private EstadoEncomienda estado = EstadoEncomienda.REGISTRADO;
 
     // Relación con User (quién creó la encomienda)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) 
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }
