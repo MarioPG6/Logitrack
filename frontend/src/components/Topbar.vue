@@ -1,11 +1,9 @@
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 h-16
-           bg-primary text-white shadow-lg"
+    class="fixed top-0 inset-x-0 z-50 h-16 bg-primary text-white shadow-lg"
   >
     <div
-      class="max-w-[1440px] mx-auto h-full px-4 lg:px-8
-             flex items-center justify-between"
+      class="max-w-[1440px] mx-auto h-full px-4 lg:px-8 flex items-center justify-between"
     >
       <!-- LEFT: Burger + Logo -->
       <div class="flex items-center gap-3">
@@ -14,8 +12,7 @@
           v-if="isAuthenticated"
           @click="onBurger"
           aria-label="Abrir menú"
-          class="w-10 h-10 flex items-center justify-center
-                 rounded-lg hover:bg-white/10 transition"
+          class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition"
         >
           <svg
             class="w-6 h-6"
@@ -40,16 +37,11 @@
           <img
             src="@/assets/Logo3.png"
             alt="LogiTrack"
-            class="
-              w-9 h-9 object-contain
-              drop-shadow-sm
-            "
+            class="w-9 h-9 object-contain drop-shadow-sm"
           />
 
           <!-- Texto solo desktop -->
-          <span
-            class="hidden md:block text-xl font-extrabold tracking-tight"
-          >
+          <span class="hidden md:block text-xl font-extrabold tracking-tight">
             LogiTrack
           </span>
         </RouterLink>
@@ -67,9 +59,7 @@
 
           <RouterLink
             to="/register"
-            class="px-5 py-2 rounded-lg bg-white text-primary
-                   font-bold shadow-md hover:bg-slate-100
-                   transition active:scale-95"
+            class="px-5 py-2 rounded-lg bg-white text-primary font-bold shadow-md hover:bg-slate-100 transition active:scale-95"
           >
             Registrar
           </RouterLink>
@@ -77,10 +67,11 @@
 
         <template v-else>
           <button
-            @click="logout"
-            class="text-red-200 hover:text-red-100 transition font-semibold"
+            @click="handleLogout"
+            class="flex items-center gap-2 px-3 py-2 rounded-lg text-red-100 hover:text-white hover:bg-red-500/20 transition active:scale-95"
           >
-            Cerrar sesión
+            <LogOut class="w-5 h-5" />
+            <span class="hidden md:inline">Cerrar sesión</span>
           </button>
         </template>
       </nav>
@@ -91,24 +82,24 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { RouterLink, useRouter } from "vue-router";
+import { logout } from "@/services/authService";
+import { LogOut } from "lucide-vue-next";
 
 const emit = defineEmits(["toggle-sidebar"]);
 const router = useRouter();
 const isAuthenticated = ref(false);
 
-function onBurger() {
-  emit("toggle-sidebar");
-}
-
 function applyAuth() {
   isAuthenticated.value = !!localStorage.getItem("token");
 }
 
-function logout() {
-  localStorage.removeItem("token");
-  applyAuth();
+function onBurger() {
   emit("toggle-sidebar");
-  window.dispatchEvent(new Event("auth-changed"));
+}
+
+function handleLogout() {
+  logout();
+  emit("toggle-sidebar");
   router.push("/login");
 }
 

@@ -1,61 +1,73 @@
 <template>
-  <div class="sidebar">
-    <div class="head">Menú</div>
+  <aside
+    v-if="isAuthenticated"
+    class="h-full w-64 bg-primary text-white
+           flex flex-col border-r border-white/10"
+  >
+    <!-- Header -->
+    <div class="px-4 py-4 font-bold text-lg">
+      Menú
+    </div>
 
-    <ul class="list">
-      <template v-if="isAuthenticated">
-        <li><RouterLink to="/profile">Cuenta</RouterLink></li>
+    <!-- Links -->
+    <ul class="flex-1 px-2 space-y-1">
+      <li>
+        <RouterLink
+          to="/profile"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg
+                 hover:bg-white/10 transition"
+        >
+          <User class="w-5 h-5" />
+          Cuenta
+        </RouterLink>
+      </li>
 
-        <!-- CLIENTE -->
-        <template v-if="userRole === 'CLIENTE'">
-          <li>
-            <RouterLink to="/encomiendas/nueva">Generar encomienda</RouterLink>
-          </li>
-          <li><RouterLink to="/mis-encomiendas">Encomiendas</RouterLink></li>
-        </template>
-
-        <!-- TRABAJADOR -->
-        <template v-if="userRole === 'TRABAJADOR'">
-          <li>
-            <RouterLink to="/trabajador/encomiendas">Encomiendas disponibles</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/trabajador/reportar-problema">Reportar problemática</RouterLink>
-          </li>
-        </template>
-
-        <!-- ADMINISTRADOR -->
-        <template v-if="userRole === 'ADMINISTRADOR'">
-          <li>
-            <RouterLink to="/admin/usuarios">Administrar usuarios</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/admin/dashboard">Dashboard / Estadísticas</RouterLink>
-          </li>
-        </template>
+      <!-- CLIENTE -->
+      <template v-if="userRole === 'CLIENTE'">
+        <li>
+          <RouterLink
+            to="/encomiendas/nueva"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg
+                   hover:bg-white/10 transition"
+          >
+            <Package class="w-5 h-5" />
+            Generar encomienda
+          </RouterLink>
+        </li>
       </template>
+
+      <!-- ADMIN / TRABAJADOR igual -->
     </ul>
-  </div>
+
+    <!-- LOGOUT -->
+    <div class="p-2 border-t border-white/10">
+      <button
+        @click="handleLogout"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-lg
+               text-red-200 hover:text-white
+               hover:bg-red-500/20 transition"
+      >
+        <LogOut class="w-5 h-5" />
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
 </template>
+
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-import { getCurrentUser } from "../services/authService.js";
+import { getCurrentUser, logout } from "@/services/authService";
 
 import {
-  Home,
-  LogIn,
-  UserPlus,
   User,
-  LogOut,
-  MapPin,
   Package,
   Truck,
-  Boxes,
   AlertTriangle,
   Users,
   BarChart2,
+  LogOut,
 } from "lucide-vue-next";
 
 const router = useRouter();
@@ -64,41 +76,32 @@ const userRole = ref(null);
 
 async function applyAuth() {
   try {
-    const u = await getCurrentUser();
-    isAuthenticated.value = !!u;
-    userRole.value = u?.role ?? null;
+    const user = await getCurrentUser();
+    isAuthenticated.value = true;
+    userRole.value = user.role;
   } catch {
     isAuthenticated.value = false;
     userRole.value = null;
   }
 }
 
-function onAuthChanged() {
-  applyAuth();
-}
-function onStorage(e) {
-  if (e.key === "token") applyAuth();
+function handleLogout() {
+  logout();
+  router.push("/login");
 }
 
 onMounted(() => {
   applyAuth();
-  window.addEventListener("auth-changed", onAuthChanged);
-  window.addEventListener("storage", onStorage); 
+  window.addEventListener("auth-changed", applyAuth);
+  window.addEventListener("storage", applyAuth);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("auth-changed", onAuthChanged);
-  window.removeEventListener("storage", onStorage);
+  window.removeEventListener("auth-changed", applyAuth);
+  window.removeEventListener("storage", applyAuth);
 });
-
-function logout() {
-  localStorage.removeItem("token");
-  isAuthenticated.value = false;
-  userRole.value = null;
-  window.dispatchEvent(new Event("auth-changed")); 
-  router.push("/login");
-}
 </script>
+
 
 <style scoped>
 .sidebar {
