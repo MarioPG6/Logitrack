@@ -3,16 +3,23 @@
     <Topbar @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
 
     <div
+      v-if="isAuthenticated && isMobile && isSidebarOpen"
       class="overlay"
-      v-show="isMobile && isSidebarOpen"
       @click="isSidebarOpen = false"
     ></div>
 
-    <aside class="sidebar-shell" :class="{ open: isSidebarOpen }">
+    <aside
+      v-if="isAuthenticated"
+      class="sidebar-shell"
+      :class="{ open: isSidebarOpen }"
+    >
       <Sidebar />
     </aside>
 
-    <main class="content" :class="{ pushed: isSidebarOpen && !isMobile }">
+    <main
+      class="content"
+      :class="{ pushed: isAuthenticated && isSidebarOpen && !isMobile }"
+    >
       <RouterView />
     </main>
   </div>
@@ -26,13 +33,33 @@ import Sidebar from "./components/Sidebar.vue";
 
 const isSidebarOpen = ref(false);
 const isMobile = ref(false);
+const isAuthenticated = ref(false);
+
 const update = () => (isMobile.value = matchMedia("(max-width:900px)").matches);
+
+function applyAuth() {
+  const hasToken = !!localStorage.getItem("token");
+  isAuthenticated.value = hasToken;
+
+  if (!hasToken) {
+    isSidebarOpen.value = false;
+  }
+}
 
 onMounted(() => {
   update();
-  addEventListener("resize", update);
+  applyAuth();
+
+  window.addEventListener("resize", update);
+  window.addEventListener("auth-changed", applyAuth);
+  window.addEventListener("storage", applyAuth);
 });
-onBeforeUnmount(() => removeEventListener("resize", update));
+
+onBeforeUnmount(() => {
+  removeEventListener("resize", update);
+  window.removeEventListener("auth-changed", applyAuth);
+  window.removeEventListener("storage", applyAuth);
+});
 </script>
 
 <style>
@@ -40,7 +67,7 @@ onBeforeUnmount(() => removeEventListener("resize", update));
   --topbar-h: 56px;
   --sidebar-w: 260px;
   --brand-green: #2e7d32;
-  --sidebar-bg: #0f172a; 
+  --sidebar-bg: #0f172a;
 }
 
 .overlay {
@@ -60,21 +87,24 @@ onBeforeUnmount(() => removeEventListener("resize", update));
   top: var(--topbar-h);
   left: 0;
   width: var(--sidebar-w);
-  height: calc(
-    100vh - var(--topbar-h)
-  ); 
+  height: calc(100vh - var(--topbar-h));
   background: var(--sidebar-bg);
-  transform: translateX(-100%); 
+  transform: translateX(-100%);
   transition: transform 0.2s ease;
   z-index: 1050;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 .sidebar-shell.open {
-  transform: translateX(0); 
+  transform: translateX(0);
 }
 
 .content {
   padding: calc(var(--topbar-h) + 24px) 16px 24px;
   transition: margin-left 0.2s ease;
+}
+@media (min-width: 901px) {
+  .content.pushed {
+    margin-left: var(--sidebar-w);
+  }
 }
 </style>
